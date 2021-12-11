@@ -1,0 +1,28 @@
+@tailwind components;
+
+@layer components
+{
+    .standard-btn{
+        @apply bg-brown-gray px-4 py-2 text-gray-500 font-serif font-extralight hover:shadow-lg active:scale-90 transform transition-all duration-500 ease-out
+    }
+
+    .category{
+        @apply text-gray-500 text-sm font-serif font-thin
+    }
+
+    .paragraph-1{
+        @apply text-gray-500 leading-6 text-xs
+    }
+
+    .line-brown{
+        @apply w-8 bg-header-brown p-[0.103rem]
+    }
+
+    .subheading-1{
+        @apply text-xl font-light text-gray-700
+    }
+
+    .large-btn{
+        @apply md:w-[380px] bg-brown-gray py-2 font-serif font-thin text-gray-500 hover:shadow-lg active:scale-90 transform transition-all duration-500 ease-out
+    }
+}
