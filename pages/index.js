@@ -9,8 +9,32 @@ import ProfileCard from '../components/ProfileCard'
 import SmallCards from '../components/SmallCards'
 import SmallPost from '../components/SmallPost'
 import SocialIcons from '../components/SocialIcons'
+import Tag from '../components/Tag'
+import Image from "next/image";
+import Latest from '../components/Latest'
+import { StarIcon } from '@heroicons/react/solid'
+import ProductSmall from '../components/ProductSmall'
+import Footer from '../components/Footer'
+ 
+// The Storyblok Client
+// import Storyblok from "../lib/storyblok";
+import StoryblokClient from "storyblok-js-client";
+import DynamicComponent from '../components/DynamicComponent'
+import  { useStoryblok } from "../lib/storyblok";
 
-export default function Home() {
+ 
+const Storyblok = new StoryblokClient({
+  accessToken: "VF9PTpnwlp3TqQM0lsVUwwtt",
+  cache: {
+    clear: "auto",
+    type: "memory",
+  },
+});
+export default function Home({ story, preview }) {
+  const enableBridge = true; // load the storyblok bridge everywhere
+  // const enableBridge = preview; // enable bridge only in prevew mode
+ 
+  story = useStoryblok(story, enableBridge);
   return (
     <div className="flex flex-col pb-10">
       <Head>
@@ -58,7 +82,11 @@ export default function Home() {
             {/* Medium card section */}
 
               <div>
+                <h1>{ story ? story.name : 'My Site' }</h1>
+                <DynamicComponent blok={story.content} />
+
                 <MediumSection />
+
               </div>
             </div>
           
@@ -123,15 +151,147 @@ export default function Home() {
                 </div>
             </div>
 
+            {/* Tags section */}
+
+            <div className="space-y-4 ml-10 mt-10">
+                  <div className="block space-y-4">
+                    <h3 className="subheading-1">Tags</h3>
+                    <div className="line-brown"/>
+                  </div>
+
+                  {/* Tags grid section */}
+
+                  <div className="grid grid-cols-3 gap-4">
+                    <Tag title="Architecture" />
+                    <Tag title="AVOCADO" />
+                    <Tag title="CARS" />
+                    <Tag title="MUSTANGS" />
+                    <Tag title="F1" />
+
+                    <Tag title="Architecture" />
+                    <Tag title="AVOCADO" />
+                    <Tag title="CARS" />
+                    <Tag title="MUSTANGS" />
+                    <Tag title="F1" />
+
+                    <Tag title="Architecture" />
+                    <Tag title="AVOCADO" />
+                    <Tag title="CARS" />
+                    <Tag title="MUSTANGS" />
+                    <Tag title="F1" />
+
+                  </div>
+            </div>
+
             </div>
           </div>
 
+
+        {/* Insert pagination later */}
+
+        {/* Horizontal Instagram Posts */}
+
+        {/* <div className="mt-10 -ml-20 w-screen">
+            <div className="flex">
+              <Image src="/images/greece.jpg" height={200} width={250} objectFit="cover"/>
+              <Image src="/images/greece.jpg" height={200} width={250} objectFit="cover"/>
+              <Image src="/images/greece.jpg" height={200} width={250} objectFit="cover"/>
+              <Image src="/images/greece.jpg" height={200} width={250} objectFit="cover"/>
+
+            </div>
+        </div> */}
+
+        <div className="grid grid-cols-3 mt-10 gap-x-8">
+            {/* About me */}
+            <div className="flex-col sace-y-5">
+                <div className="flex-col space-y-4">
+                    <h5 className="subheading-1">About Me</h5>
+
+                    <div className="line-brown"/>
+                </div>
+
+                <div className="mt-5">
+                    <p className="paragraph-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                      sed do eiusmod tempor incididunt ut labore et dolore magna 
+                      aliqua
+                    </p>
+                </div>
+
+                <div className="mt-5">
+                  <SocialIcons />
+                </div>
+            </div>
+
+            {/* Latest Posts */}
+
+            <div className="flex-col">
+                  <div className="flex-col space-y-4">
+                    <h5 className="subheading-1">Latest Posts</h5>
+
+                    <div className="line-brown"/>
+                  </div>
+
+                  <div className="flex-col divide-y-2 space-y-5 mt-5">
+                      <Latest />
+                      <Latest />
+                      <Latest />
+
+                      
+                  </div>
+            </div>
+
+            {/* Latest Products */}
+
+            <div className="flex-col">
+                  <div className="flex-col space-y-4">
+                    <h5 className="subheading-1">Latest Products</h5>
+
+                    <div className="line-brown"/>
+                  </div>
+
+                  <div className="flex-col divide-y-2 space-y-5 mt-5">
+                   <ProductSmall />
+                   <ProductSmall />
+
+                   
+                      
+                  </div>
+            </div>
+        </div>
           
         </div>
 
 
 
     </main>
+          <div className="-mb-10">
+          <Footer />
+
+          </div>
         </div>
   )
+}
+export async function getStaticProps({ preview = false }) {
+  // home is the default slug for the homepage in Storyblok
+  let slug = "home";
+  // load the published content outside of the preview mode
+  let sbParams = {
+    version: "draft", // or 'published'
+  };
+
+  if (preview) {
+    // load the draft version inside of the preview mode
+    sbParams.version = "draft";
+    sbParams.cv = Date.now();
+  }
+
+  let { data } = await Storyblok.get(`cdn/stories/${slug}`, sbParams);
+
+  return {
+    props: {
+      story: data ? data.story : null,
+      preview,
+    },
+    revalidate: 3600, // revalidate every hour
+  };
 }

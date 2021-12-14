@@ -26,11 +26,11 @@ function Header() {
                 
                 <div className="flex space-x-4 mr-20">
                     {/* Icons */}
-                    <InstagramIcon className="h-3 text-white"/>
+                    <InstagramIcon className="h-2 text-gray-300"/>
                     
-                    <FaceBookIcon className="h-3 text-white"/>
-                    <PinterestIcon className="h-3 text-white"/>
-                    <YoutubeIcon className="h-3 text-white"/>
+                    <FaceBookIcon className="h-2 text-gray-300"/>
+                    <PinterestIcon className="h-2 text-gray-300"/>
+                    <YoutubeIcon className="h-2 text-gray-300"/>
                 </div>
 
             </div>

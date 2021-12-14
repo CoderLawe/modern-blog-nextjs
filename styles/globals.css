@@ -25,4 +25,12 @@
     .large-btn{
         @apply md:w-[380px] bg-brown-gray py-2 font-serif font-thin text-gray-500 hover:shadow-lg active:scale-90 transform transition-all duration-500 ease-out
     }
+
+    .subheading-2{
+        @apply font-thin text-lg text-gray-600 font-serif italic
+    }
+
+    .date{
+        @apply font-thin text-gray-500 italic font-serif
+    }
 }

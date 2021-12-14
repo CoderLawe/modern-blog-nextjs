@@ -8,8 +8,7 @@ function MediumSection() {
             <RightMedium />
             <LeftMedium />
             <RightMedium />
-            <LeftMedium />
-            <RightMedium />
+           
             
         </div>
     )
