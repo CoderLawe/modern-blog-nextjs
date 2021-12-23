@@ -6,21 +6,50 @@ import SocialIcons from "../components/SocialIcons";
 import InstagramGrid from "../components/InstagramGrid";
 import Tag from "../components/Tag";
 import Newsletter from "../components/Newsletter";
-export default function detail(){
+
+export const getStaticPaths = async () => {
+    const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const data = await res.json();
+    const paths = data.map(post => {
+        return {
+            // Gets the params for each post and route
+            params:{id: post.id.toString()}
+        }
+    })
+    return{
+       paths,
+       fallback:false
+    //    If route does not exist show 404 (fallback)
+    }
+}
+
+export const getStaticProps = async (context) => {
+       const id = context.params.id
+    //    From params from paths returned from getStaticPaths
+       const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+       const data = await res.json()
+
+       return{
+           props:{
+               post:data
+           }
+       }
+}
+function Detail({ post }){
     return(
         <div>
             <div>
                 <Header />
             </div>
 
-            <div className="flex space-x-6 mx-20 mt-10">
+            <div className="block md:flex md:space-x-6 mx-20 mt-10">
                 {/* Main  */}      
                 {/* Left side */}
                 <div className="flex-col space-y-5 w-[720px]">
                     <Image src="/images/greece.jpg" height={500} width={720} objectFit="cover"/>
 
                     <div className="">
-                        <h1 className="italic font-serif text-3xl font-thin">Greek Scenery</h1>
+                        <h1 className="italic font-serif text-3xl font-thin">{post.title}</h1>
                     </div>
 
                     <h5 className="date">December 13, 2021</h5>
@@ -29,12 +58,7 @@ export default function detail(){
                         {/* Paragraph text */}
 
                         <p className="paragraph-1">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                        sed do eiusmod tempor incididunt ut labore et dolore magna 
-                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                         ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                         Duis aute irure dolor in reprehenderit in voluptate velit 
-                         esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        {post.body}
                         </p>
 
                         <p className="paragraph-1">
@@ -192,3 +216,4 @@ export default function detail(){
         </div>
     )
 }
+export default Detail

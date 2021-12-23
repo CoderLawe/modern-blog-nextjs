@@ -1,14 +1,19 @@
 // import { InstagramIcon, FaceBookIcon, PinterestIcon, YouTubeIcon } from "@heroicons/react/outline"
-import { SearchIcon, ShoppingCartIcon } from "@heroicons/react/solid"
+import { MenuIcon, SearchIcon, ShoppingCartIcon } from "@heroicons/react/solid"
 import  InstagramIcon  from "@material-ui/icons/Instagram";
 import  PinterestIcon  from "@material-ui/icons/Pinterest";
 import  YoutubeIcon  from "@material-ui/icons/Youtube";
 import FaceBookIcon from "@material-ui/icons/Facebook"
+import { useRouter } from "next/router";
+
 
 function Header() {
+
+    const router = useRouter();
     return (
         <header className="flex-col">
-            <div className="flex justify-between py-3 bg-header-brown">
+        {/* Large screen header */}
+            <div className="hidden md:flex justify-between py-3 bg-header-brown w-screen">
                 {/* Top Header */}
 
                 {/* Left section */}
@@ -24,7 +29,7 @@ function Header() {
                 {/* Right  Section */}
 
                 
-                <div className="flex space-x-4 mr-20">
+                <div className="flex space-x-4 pr-20">
                     {/* Icons */}
                     <InstagramIcon className="h-2 text-gray-300"/>
                     
@@ -35,10 +40,10 @@ function Header() {
 
             </div>
 
-            <div className="grid grid-cols-3 gap-10 bg-white shadow-lg mx-5 py-6 px-5 ">
+            <div className="hidden md:grid grid-cols-3 gap-10 bg-white shadow-lg mx-8 py-6 px-5 max-w-[95vw]">
                 {/* Bottom Header */}
                 <div className="pl-6">
-                    <h1 className="text-3xl text-gray-600 font-serif">L a w e</h1>
+                    <h2 onClick={() => router.push('/')} className="text-3xl text-gray-600 font-serif cursor-pointer">L a w e</h2>
                 </div>
 
                 <div className="flex space-x-5">
@@ -58,6 +63,29 @@ function Header() {
                 </div>
             </div>
             
+            {/* Small screen header */}
+            <div className="md:hidden flex justify-between bg-header-brown w-screen items-center px-6 py-3">
+                {/* Left side */}
+                <div className="flex space-x-4 text-gray-200 p-3">
+                    <InstagramIcon className="h-8"/>
+                    <FaceBookIcon  className="h-8"/>
+                    <PinterestIcon  className="h-8"/>
+                    <YoutubeIcon  className="h-8"/>
+                </div>
+
+                {/* Right side */}
+                <div className="flex space-x-4">
+                    <ShoppingCartIcon className="h-6 text-gray-200"/>
+                    <SearchIcon className="h-6 text-gray-200"/>
+
+                </div>
+            </div>
+
+            <div className="md:hidden flex justify-between bg-white px-6 z-50 py-7">
+                <h1 onClick={() => router.push('/')} className="text-3xl text-gray-600 font-serif cursor-pointer">L A W E</h1>
+
+                <MenuIcon className="h-8 text-black cursor-pointer"/>
+            </div>
         </header>
     )
 }

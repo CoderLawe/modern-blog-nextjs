@@ -1,10 +1,10 @@
 function Footer() {
     return (
-        <footer className="flex justify-between bg-header-brown position bottom-0  w-full mt-10 py-5 px-10">
-            <div className="mx-10">
+        <footer className="md:flex justify-between bg-header-brown position bottom-0  w-full mt-10 py-5 md:px-10">
+            <div className="md:mx-10">
 
                 {/* Left side */}
-                <div className="flex space-x-3">
+                <div className="flex justify-center space-x-8">
                     <h6 className="text-gray-300 italic font-serif">Privacy Policy</h6>
                     <h6 className="text-gray-300 italic font-serif">Cookie Policy</h6>
                     <h6 className="text-gray-300 italic font-serif">Contact</h6>

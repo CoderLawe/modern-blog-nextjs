@@ -1,7 +1,7 @@
 import Image from 'next/image';
-function SmallPost() {
+function SmallPost({ title, image, body, id}) {
     return (
-        <div className="flex space-x-3 pt-6">
+        <div className="md:flex block space-y-3 space-x-3 pt-6">
             {/* Left side */}
             <div className="flex-col pb-20">
                 <Image src="/images/greece.jpg" height={140} width={260} objectFit="cover"/>
@@ -18,7 +18,7 @@ function SmallPost() {
                 </div>
 
                 <div className="w-[250px] mt-3">
-                    <p className="text-gray-500 leading-6 text-xs"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                    <p className="paragraph-1"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                 sed do eiusmod tempor incididunt ut labore et dolore magna 
                 aliqua.  Lorem ipsum dolor sit amet...</p>
                 </div>
