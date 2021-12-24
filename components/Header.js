@@ -1,9 +1,9 @@
 // import { InstagramIcon, FaceBookIcon, PinterestIcon, YouTubeIcon } from "@heroicons/react/outline"
 import { MenuIcon, SearchIcon, ShoppingCartIcon } from "@heroicons/react/solid"
-import  InstagramIcon  from "@material-ui/icons/Instagram";
-import  PinterestIcon  from "@material-ui/icons/Pinterest";
-import  YoutubeIcon  from "@material-ui/icons/Youtube";
-import FaceBookIcon from "@material-ui/icons/Facebook"
+// import  InstagramIcon  from "@material-ui/icons/Instagram";
+// import  PinterestIcon  from "@material-ui/icons/Pinterest";
+// import  YoutubeIcon  from "@material-ui/icons/Youtube";
+// import FaceBookIcon from "@material-ui/icons/Facebook"
 import { useRouter } from "next/router";
 
 
@@ -31,11 +31,16 @@ function Header() {
                 
                 <div className="flex space-x-4 pr-20">
                     {/* Icons */}
-                    <InstagramIcon className="h-2 text-gray-300"/>
+                    
+                    {/* <InstagramIcon className="h-2 text-gray-300"/>
                     
                     <FaceBookIcon className="h-2 text-gray-300"/>
                     <PinterestIcon className="h-2 text-gray-300"/>
-                    <YoutubeIcon className="h-2 text-gray-300"/>
+                    <YoutubeIcon className="h-2 text-gray-300"/> */}
+                    <ShoppingCartIcon className="h-2 text-gray-300" />
+                    <SearchIcon className="h-2 text-gray-300" />
+                    <ShoppingCartIcon className="h-2 text-gray-300" />
+                    <SearchIcon className="h-2 text-gray-300" />
                 </div>
 
             </div>

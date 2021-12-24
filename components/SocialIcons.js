@@ -6,10 +6,10 @@ import FaceBookIcon from "@material-ui/icons/Facebook"
 function SocialIcons() {
     return (
         <div className="flex space-x-4">
-            <InstagramIcon className="h-3 text-gray-700"/>
-            <FaceBookIcon className="h-3 text-gray-700"/>
-            <PinterestIcon className="h-3 text-gray-700"/>
-            <YoutubeIcon className="h-3 text-gray-700"/>
+             <ShoppingCartIcon className="h-3 text-gray-700" />
+                    <SearchIcon className="h-3 text-gray-700" />
+                    <ShoppingCartIcon className="h-3 text-gray-700" />
+                    <SearchIcon className="h-3 text-gray-700" />
         </div>
     )
 }
