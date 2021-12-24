@@ -18,7 +18,7 @@ function LeftMedium({title, body, id}) {
 
                     <h6 className="category">December 11, 2021</h6>
 
-                    <div className="w-[350px]">
+                    <div className="w-[300px]">
                         <p className="md:paragraph-1 text-gray-500 leading-6 font-serif">{body}</p>
                     </div>
 

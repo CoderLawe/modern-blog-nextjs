@@ -6,8 +6,8 @@ import FaceBookIcon from "@material-ui/icons/Facebook"
 
 function ProfileCard() {
     return (
-        <div className="flex justify-center">
-            <div className="flex-col items-center space-y-5 w-[400px]">
+        <div className="">
+            <div className="flex-col items-center space-y-5 md:w-[400px] px-3">
                 <div className="">
                     <div className="relative">
                         <Image src="/images/greece.jpg" height={190} width={400} objectFit="cover"/>

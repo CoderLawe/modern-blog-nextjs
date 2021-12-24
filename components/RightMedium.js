@@ -2,23 +2,23 @@ import Image from 'next/image';
 import Link from "next/link";
 function RightMedium({ title, body, id }) {
     return (
-        <div className="md:flex block space-y-4 md:space-y-0 space-x-4 py-5 p">
+        <div className="md:flex block space-y-4 md:space-y-0 space-x-4 py-5 px-3">
                 {/* Left side */}
                 
-                <div className="md:order-2 h-[300px] w-[400px] md:h-[200px] md:w-[300px] relative">
+                <div className="md:order-2 h-[300px]  md:h-[200px] md:w-[300px] relative">
                     <Image src="/images/greece.jpg" layout="fill" objectFit="cover"/>
                 </div>
 
                 {/* Right side */}
 
-                <div className="md:order-1 flex-col space-y-6">
+                <div className="md:order-1flex-col space-y-6">
                     <h6 className="category">Lifestyle</h6>
 
                     <h5 className="font-serif text-3xl font-extralight text-gray-700 truncate max-w-[250px]">{title}</h5>
 
                     <h6 className="category">December 11, 2021</h6>
 
-                    <div className="w-[350px]">
+                    <div className="w-[300px]">
                         <p className="md:paragraph-1 text-gray-500 leading-6 font-serif">{body}</p>
                     </div>
 

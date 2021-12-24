@@ -10,7 +10,7 @@ function MediumSection({ posts, images}) {
         setSpecPost(posts)
     },[])
     return (
-        <div className="flex justify-center flex-col space-y-10 divide-y-2 ml-4">
+        <div className="flex justify-center flex-col space-y-10 divide-y-2 ">
             {specPost.slice(0,1).map(post => (
                 <>
                     <LeftMedium title={post.title} body={post.body} id={post.id}/>
