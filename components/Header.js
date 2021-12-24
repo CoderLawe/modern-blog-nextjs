@@ -72,10 +72,10 @@ function Header() {
             <div className="md:hidden flex justify-between bg-header-brown w-screen items-center px-6 py-3">
                 {/* Left side */}
                 <div className="flex space-x-4 text-gray-200 p-3">
-                    <InstagramIcon className="h-8"/>
-                    <FaceBookIcon  className="h-8"/>
-                    <PinterestIcon  className="h-8"/>
-                    <YoutubeIcon  className="h-8"/>
+                <ShoppingCartIcon className="h-8" />
+                    <SearchIcon className="h-8" />
+                    <ShoppingCartIcon className="h-8" />
+                    <SearchIcon className="h-8" />
                 </div>
 
                 {/* Right side */}

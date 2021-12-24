@@ -1,7 +1,5 @@
-import  InstagramIcon  from "@material-ui/icons/Instagram";
-import  PinterestIcon  from "@material-ui/icons/Pinterest";
-import  YoutubeIcon  from "@material-ui/icons/Youtube";
-import FaceBookIcon from "@material-ui/icons/Facebook"
+import { MenuIcon, SearchIcon, ShoppingCartIcon } from "@heroicons/react/solid"
+
 
 function SocialIcons() {
     return (
