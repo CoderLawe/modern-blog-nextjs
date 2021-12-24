@@ -1,5 +1,5 @@
 import { BookOpenIcon, CameraIcon, MenuIcon, PhoneIcon, SearchIcon, ShoppingCartIcon } from "@heroicons/react/solid"
-
+import Image from "next/image";
 function ProfileCard() {
     return (
         <div className="">
