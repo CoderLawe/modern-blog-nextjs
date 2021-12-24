@@ -1,8 +1,4 @@
-import Image from 'next/image';
-import  InstagramIcon  from "@material-ui/icons/Instagram";
-import  PinterestIcon  from "@material-ui/icons/Pinterest";
-import  YoutubeIcon  from "@material-ui/icons/Youtube";
-import FaceBookIcon from "@material-ui/icons/Facebook"
+import { BookOpenIcon, CameraIcon, MenuIcon, PhoneIcon, SearchIcon, ShoppingCartIcon } from "@heroicons/react/solid"
 
 function ProfileCard() {
     return (
@@ -30,10 +26,10 @@ function ProfileCard() {
                 </div>
             
             <div className="flex justify-center space-x-8 pb-8">
-                    <InstagramIcon className="h-3 text-gray-800"/>               
-                    <FaceBookIcon className="h-3 text-gray-800"/>
-                    <PinterestIcon className="h-3 text-gray-800"/>
-                    <YoutubeIcon className="h-3 text-gray-800"/>          
+                    <PhoneIcon className="h-3 text-gray-800"/>               
+                    <BookOpenIcon className="h-3 text-gray-800"/>
+                    <CameraIcon className="h-3 text-gray-800"/>
+                    <CameraIcon className="h-3 text-gray-800"/>
                 </div>
             </div>
         </div>
