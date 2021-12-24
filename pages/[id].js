@@ -18,7 +18,7 @@ export const getStaticPaths = async () => {
     })
     return{
        paths,
-       fallback:false
+       fallback:true
     //    If route does not exist show 404 (fallback)
     }
 }
@@ -35,7 +35,7 @@ export const getStaticProps = async (context) => {
            }
        }
 }
-function Detail({ post }){
+export default function Detail({ post }){
     return(
         <div>
             <div>
@@ -216,4 +216,3 @@ function Detail({ post }){
         </div>
     )
 }
-export default Detail

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+
 function HomePosts({title, body, id}) {
     return (
         <div>
