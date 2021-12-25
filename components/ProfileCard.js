@@ -2,7 +2,7 @@ import { BookOpenIcon, CameraIcon, MenuIcon, PhoneIcon, SearchIcon, ShoppingCart
 import Image from "next/image";
 function ProfileCard() {
     return (
-        <div className="">
+        <div className="flex justify-end">
             <div className="flex-col items-center space-y-5 md:w-[400px] px-3">
                 <div className="">
                     <div className="relative">

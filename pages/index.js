@@ -59,9 +59,9 @@ export default function Home({  posts }) {
             <div className="flex justify-center">
               <div className="md:mx-28  flex-col mx-auto space-y-4 md:space-y-0 md:grid md:grid-cols-3 md:gap-3 mt-10">
             
-            <SmallCards />    
-            <SmallCards />    
-            <SmallCards />   
+                <SmallCards />    
+                <SmallCards />    
+                <SmallCards />   
             </div>
         </div>
         <div className="md:mx-28  mt-5">
@@ -78,7 +78,7 @@ export default function Home({  posts }) {
             </div>
             
           </div> */}
-          <div className="md:flex block space-x-3 mt-5 divide-y-2">
+          <div className="md:flex justify-between block space-x-3 mt-5 divide-y-2">
             {/* Left side large card*/}
             <div>
               <div className="hidden md:flex justify-center">
@@ -99,47 +99,51 @@ export default function Home({  posts }) {
             </div>
 
             {/* Right */}
-           <div className="flex justify-end">
-            <div className="flex-col">
-              <div className="flex  justify-center md:block md:ml-10 mx-auto">
+           <div className="md:flex md:justify-end">
+            <div className="flex-col md:items-end">
+              <div className="md:justify-end md:ml-10 mx-auto">
                 <ProfileCard />
               </div>
-              <div className="flex-col space-y-3 md:ml-10">
-                <h3>Latest Posts</h3>
-                <div className="line-brown"/>
-              </div>
-            
-            {/* <div>
-              <MainPostsSection posts={posts} />
-            </div> */}
-            <div className="md:ml-10 divide-y-2 mt-5">
-                    <Latest/>
-                    <Latest/>
-                    <Latest/>
+              <div className="flex md:justify-end">
+                <div className="flex-col space-y-3 md:ml-10">
+                  <h3>Latest Posts</h3>
+                  <div className="line-brown"/>
+                </div>
+              
+              {/* <div>
+                <MainPostsSection posts={posts} />
+              </div> */}
+              <div className="md:ml-10 divide-y-2 mt-5">
+                      <Latest/>
+                      <Latest/>
+                      <Latest/>
 
 
+                </div>
+
+
+
+{/*  */}
+                
               </div>
+             
 
 
             {/* Follow me section */}
+              <div className="ml-[50%]">
+                <div className="flex-col items-end space-y-4">
+                  <h3 className="subheading-1"> Follow Me</h3>
+                  <div className="line-brown"/>
 
-            <div className="ml-10">
-              <div className="block space-y-4">
-                <h3 className="subheading-1"> Follow Me</h3>
-                <div className="line-brown"/>
-
-                <div>
-                    <SocialIcons />
+                  <div>
+                      <SocialIcons />
+                  </div>
                 </div>
-              </div>
-            </div>
 
 
-            {/* Instagram Posts grid section */}
-
-            <div className="ml-10 mt-10 block space-y-4">
-              <div className="block space-y-4">
-                  <h3 className="subheading-1">Instagram</h3>
+              <div className="mt-10 block space-y-4">
+              <div className="block space-y-4 ml-[50%]">
+                  <h3 className="subheading-1 ">Instagram</h3>
                   <div className="line-brown"/>
               </div>
 
@@ -150,9 +154,7 @@ export default function Home({  posts }) {
             </div>
 
 
-            {/* Search section */}
-
-            <div className="block space-y-4 ml-10 mt-10">
+            <div className="block space-y-4  mt-10">
                 <div className="block space-y-4">
                     <h3 className="subheading-1">Search</h3>
                     <div className="line-brown"/>
@@ -166,7 +168,8 @@ export default function Home({  posts }) {
                 </div>
             </div>
 
-            {/* Tags section */}
+
+
 
             <div className="space-y-4  mt-10">
                   <div className="block space-y-4">
@@ -197,6 +200,21 @@ export default function Home({  posts }) {
 
                   </div>
             </div>
+            </div>
+           
+
+
+            {/* Instagram Posts grid section */}
+
+           
+
+
+            {/* Search section */}
+
+            
+
+            {/* Tags section */}
+
 
             </div>
           </div>
@@ -279,10 +297,10 @@ export default function Home({  posts }) {
 
 
     </main>
-          {/* <div className="bottom-0">
+          <div className="bottom-0">
           <Footer />
 
-          </div> */}
+          </div>
         </div>
       </div>
   )

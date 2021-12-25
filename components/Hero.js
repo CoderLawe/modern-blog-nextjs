@@ -17,12 +17,16 @@ function Hero() {
         showThumbs={false}
         interval={3000}
         >
-            <div className="w-full h-[390px] relative">
+            <div className="w-full h-[390px] relative ">
                 <Image src="/images/greece.jpg" layout="fill" objectFit="cover"/>
 
-                <NavCard title="Exploring Greece" body=" Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
-                            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-                            laboris nisi ut aliquip ex ea commodo consequat."/>
+                <div className="flex">
+                    
+                    <NavCard title="Exploring Greece" body=" Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+                                laboris nisi ut aliquip ex ea commodo consequat."/>
+                </div>
+                
             </div>
 
 
