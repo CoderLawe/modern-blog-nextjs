@@ -104,7 +104,7 @@ export default function Home({  posts }) {
               <div className="md:justify-end md:ml-10 mx-auto">
                 <ProfileCard />
               </div>
-              <div className="flex md:justify-end">
+              <div className="md:flex md:justify-end">
                 <div className="flex-col space-y-3 md:ml-10">
                   <h3>Latest Posts</h3>
                   <div className="line-brown"/>
@@ -130,7 +130,7 @@ export default function Home({  posts }) {
 
 
             {/* Follow me section */}
-              <div className="ml-[50%]">
+              <div className="md:ml-[50%]">
                 <div className="flex-col items-end space-y-4">
                   <h3 className="subheading-1"> Follow Me</h3>
                   <div className="line-brown"/>
@@ -142,7 +142,7 @@ export default function Home({  posts }) {
 
 
               <div className="mt-10 block space-y-4">
-              <div className="block space-y-4 ml-[50%]">
+              <div className="block space-y-4 md:ml-[50%]">
                   <h3 className="subheading-1 ">Instagram</h3>
                   <div className="line-brown"/>
               </div>
