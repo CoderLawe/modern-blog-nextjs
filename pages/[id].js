@@ -49,7 +49,12 @@ export default function Detail({ post }){
                     <Image src="/images/greece.jpg" height={500} width={720} objectFit="cover"/>
 
                     <div className="">
-                        <h1 className="italic font-serif text-3xl font-thin">{post.title}</h1>
+                        {
+                            post && (
+                                <h1 className="italic font-serif text-3xl font-thin">{post.title}</h1>
+
+                            )
+                        }
                     </div>
 
                     <h5 className="date">December 13, 2021</h5>
@@ -57,9 +62,14 @@ export default function Detail({ post }){
                     <div className="block space-y-4">
                         {/* Paragraph text */}
 
-                        <p className="paragraph-1">
-                        {post.body}
-                        </p>
+                    {
+                        post && (
+                            <p className="paragraph-1">
+                            {post.body}
+                            </p>
+                        )
+                    }
+                       
 
                         <p className="paragraph-1">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
