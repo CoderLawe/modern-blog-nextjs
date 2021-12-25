@@ -99,6 +99,7 @@ export default function Home({  posts }) {
             </div>
 
             {/* Right */}
+           <div className="flex justify-end">
             <div className="flex-col">
               <div className="flex  justify-center md:block md:ml-10 mx-auto">
                 <ProfileCard />
@@ -200,6 +201,7 @@ export default function Home({  posts }) {
             </div>
           </div>
 
+           </div>
 
         {/* Insert pagination later */}
 
