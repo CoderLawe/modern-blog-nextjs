@@ -1,6 +1,6 @@
 function Footer() {
     return (
-        <footer className="md:flex justify-between bg-header-brown position bottom-0  w-full mt-10 py-5 md:px-10">
+        <footer className="md:flex block space-y-4 justify-between bg-header-brown position bottom-0  w-full mt-10 py-5 md:px-10">
             <div className="md:mx-10">
 
                 {/* Left side */}
@@ -17,8 +17,8 @@ function Footer() {
 
               {/* Right side */}
 
-              <div className="pr-10">
-                    <h6 className="whitespace-nowrap text-gray-300 italic font-serif">2021. Created By Lawe Sosah based on Lucid Themes</h6>
+              <div className="md:pr-10">
+                    <h6 className=" text-gray-300 italic font-serif">2021. Created By L. Sosah based on Lucid Themes</h6>
                 </div>
                 
         </footer>

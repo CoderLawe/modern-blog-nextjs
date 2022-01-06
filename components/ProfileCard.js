@@ -9,7 +9,7 @@ function ProfileCard() {
                         <Image src="/images/greece.jpg" height={190} width={400} objectFit="cover"/>
 
                         <div className="">
-                            <img className="absolute h-24 rounded-full border-2 border-white  top-32 left-[9.5rem] " src="https://avatars.githubusercontent.com/u/52962217?v=4" alt="Profile Image"/>
+                            <img className="absolute h-24 rounded-full border-2 border-white  top-[50%] left-[40%] " src="https://avatars.githubusercontent.com/u/52962217?v=4" alt="Profile Image"/>
                         </div>
                     </div>
                 </div>
@@ -17,7 +17,7 @@ function ProfileCard() {
                 <div className="flex justify-center ">
                     <h2 className="text-gray-800 mt-5">Magnificent Themes</h2>
                 </div>
-                <div className="w-[360px]">
+                <div className="md:w-[360px]">
                     <p className="paragraph-1">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                     sed do eiusmod tempor incididunt ut labore et dolore magna 

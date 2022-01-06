@@ -6,6 +6,7 @@ import SocialIcons from "../components/SocialIcons";
 import InstagramGrid from "../components/InstagramGrid";
 import Tag from "../components/Tag";
 import Newsletter from "../components/Newsletter";
+import Footer from "../components/Footer";
 
 export const getStaticPaths = async () => {
     const res = await fetch('https://jsonplaceholder.typicode.com/posts');
@@ -38,15 +39,16 @@ export const getStaticProps = async (context) => {
 export default function Detail({ post }){
     return(
         <div>
-            <div>
+            
+            <div className="w-full">
                 <Header />
             </div>
-
-            <div className="block md:flex md:space-x-6 mx-20 mt-10">
+            <div className=" md:flex md:space-x-6 md:mx-20 mt-10">
                 {/* Main  */}      
                 {/* Left side */}
-                <div className="flex-col space-y-5 w-[720px]">
-                    <Image src="/images/greece.jpg" height={500} width={720} objectFit="cover"/>
+
+                <div className="flex-col space-y-5 md:w-[720px]">
+                    {/* <Image src="/images/greece.jpg" height={500} width={720} objectFit="cover"/> */}
 
                     <div className="">
                         {
@@ -59,7 +61,7 @@ export default function Detail({ post }){
 
                     <h5 className="date">December 13, 2021</h5>
 
-                    <div className="block space-y-4">
+                    <div className="block space-y-4 mx-5">
                         {/* Paragraph text */}
 
                     {
@@ -107,15 +109,15 @@ export default function Detail({ post }){
                     {/* Left Profile */}
                     
                     <hr/>
-                    <div className="flex space-x-5 shadow-sm py-5">
+                    <div className="md:flex space-x-5 shadow-sm py-5 ">
                         {/* Left Side */}
-                        <div className="">
+                        <div className="flex md:block justify-center">
                             <img className=" h-24 rounded-full border-2 border-white object-cover" src="https://avatars.githubusercontent.com/u/52962217?v=4" alt="Profile Image"/>
                         </div>
                         {/* Right side */}
 
                      <div className="flex-col space-y-5">
-                        <div className=" ">
+                        <div className="flex md:block justify-center">
                             <h2 className="text-gray-800 mt-5">Magnificent Themes</h2>
                         </div>
 
@@ -142,37 +144,46 @@ export default function Detail({ post }){
                     </div>
                    
                     {/* Suggested Section */}
-                    <div className="flex-col space-y-5">
-                        <div className="flex-col space-y-3">
+                    <div className="flex-col space-y-5 ">
+                        <div className="flex-col space-y-3 ml-8 md:ml-0">
                             <h2 className="subheading-2">You may also like</h2>
                             <div className="line-brown"/>
                         </div>
 
                         {/* Posts */}
 
-                        <div className="flex space-x-4">
+                        <div className="md:flex space-x-4">
                             {/* Individual post */}
-                            <div className="flex-col space-y-4">
-                                <Image src="/images/greece.jpg" height={150} width={250} objectFit="cover"/>
-                                <h2 className="subheading-2">Greek Creek View</h2>
-                                <h5 className="date">December 14, 2021</h5>
+        
+                            <div className="flex flex-col space-y-4 ">
+                                <div className="mx-auto">
+                                    <Image src="/images/greece.jpg" height={150} width={250} objectFit="cover"/>
+                                    <h2 className="subheading-2">Greek Creek View</h2>
+                                    <h5 className="date">December 14, 2021</h5>
+                                </div>
+                               
                             </div>
 
                               {/* Individual post */}
-                              <div className="flex-col space-y-4">
-                                <Image src="/images/greece.jpg" height={150} width={250} objectFit="cover"/>
-                                <h2 className="subheading-2">Greek Creek View</h2>
-                                <h5 className="date">December 14, 2021</h5>
+                              <div className="flex flex-col space-y-4 ">
+                                <div className="mx-auto">
+                                    <Image src="/images/greece.jpg" height={150} width={250} objectFit="cover"/>
+                                    <h2 className="subheading-2">Greek Creek View</h2>
+                                    <h5 className="date">December 14, 2021</h5>
+                                </div>
+                               
                             </div>
 
 
-
                               {/* Individual post */}
-                              <div className="flex-col space-y-4">
-                                <Image src="/images/greece.jpg" height={150} width={250} objectFit="cover"/>
-                                <h2 className="subheading-2">Greek Creek View</h2>
-                                <h5 className="date">December 14, 2021</h5>
-                              </div>
+                              <div className="flex flex-col space-y-4 ">
+                                <div className="mx-auto">
+                                    <Image src="/images/greece.jpg" height={150} width={250} objectFit="cover"/>
+                                    <h2 className="subheading-2">Greek Creek View</h2>
+                                    <h5 className="date">December 14, 2021</h5>
+                                </div>
+                               
+                            </div>
                         </div>
 
                         <h1>Comments</h1>
@@ -183,7 +194,11 @@ export default function Detail({ post }){
 
                 <div className="flex-col space-y-7">
                     {/* Right side */}
-                    <ProfileCard />
+                    <div className="flex">
+                        <div className="mx-auto">
+                            <ProfileCard />
+                        </div>
+                    </div>
 
                     <div className="flex-col space-y-4 mt-5">
                         <h5 className="subheading-1">Latest Posts</h5>
@@ -216,13 +231,14 @@ export default function Detail({ post }){
                             <div className="line-brown"/>
                         </div>
 
-                        <div className="mt-5 w-[400px]">
+                        <div className="mt-5 md:w-[400px]">
                             <InstagramGrid />
                         </div>
                     </div>
 
                 </div>
             </div>
+           
         </div>
     )
 }

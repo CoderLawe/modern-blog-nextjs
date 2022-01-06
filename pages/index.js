@@ -32,7 +32,7 @@ const Storyblok = new StoryblokClient({
   },
 });
 // export default function Home({ story, preview, images, posts }) {
-export default function Home({  posts }) {
+export default function Home({  posts, images }) {
 
   const enableBridge = true; // load the storyblok bridge everywhere
   // const enableBridge = preview; // enable bridge only in prevew mode
@@ -104,7 +104,7 @@ export default function Home({  posts }) {
               <div className="md:justify-end md:ml-10 mx-auto">
                 <ProfileCard />
               </div>
-              <div className="md:flex md:justify-end">
+              <div className="md:flex flex-col md:justify-end">
                 <div className="flex-col space-y-3 md:ml-10">
                   <h3>Latest Posts</h3>
                   <div className="line-brown"/>
@@ -130,7 +130,7 @@ export default function Home({  posts }) {
 
 
             {/* Follow me section */}
-              <div className="md:ml-[50%]">
+              <div className="md:ml-10">
                 <div className="flex-col items-end space-y-4">
                   <h3 className="subheading-1"> Follow Me</h3>
                   <div className="line-brown"/>
@@ -161,7 +161,7 @@ export default function Home({  posts }) {
                 </div>
 
                 <div className="block space-y-4">
-                  <input className="focus:outline-none focus:border-black border border-gray-700 md:w-[380px] p-3" placeholder="Enter your search here"/>
+                  <input className="focus:outline-none focus:border-black border border-gray-700  p-3 md:w-[350px]" placeholder="Enter your search here"/>
                     <div>
                       <button className="large-btn">SEARCH</button>
                     </div>
@@ -309,14 +309,13 @@ export default function Home({  posts }) {
 export async function getServerSideProps(context){
   
   const posts = await fetch('https://jsonplaceholder.typicode.com/posts')
-  .then(res => res.json())
+  .then(res => res.json());
   
   // const images = await fetch('https://jsonplaceholder.typicode.com/photos')
   // .then((res) => res.json())
   return{
     props:{
       posts,
-      // images
   }
 // }
 // export async function getStaticProps({ preview = false }) {
