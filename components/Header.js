@@ -1,9 +1,9 @@
 // import { InstagramIcon, FaceBookIcon, PinterestIcon, YouTubeIcon } from "@heroicons/react/outline"
 import { MenuIcon, SearchIcon, ShoppingCartIcon } from "@heroicons/react/solid"
-import  InstagramIcon  from "@material-ui/icons/Instagram";
-import  PinterestIcon  from "@material-ui/icons/Pinterest";
-import  YoutubeIcon  from "@material-ui/icons/Youtube";
-import FaceBookIcon from "@material-ui/icons/Facebook"
+import  InstagramIcon  from "@mui/icons-material/Instagram";
+import  PinterestIcon  from "@mui/icons-mateial/Pinterest";
+import  YoutubeIcon  from "@mui/icons-material/Youtube";
+import FaceBookIcon from "@mui/icons-mateial/Facebook"
 import { useRouter } from "next/router";
 
 
