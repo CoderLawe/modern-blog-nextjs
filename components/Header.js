@@ -2,7 +2,7 @@
 import { MenuIcon, SearchIcon, ShoppingCartIcon } from "@heroicons/react/solid"
 import  InstagramIcon  from "@mui/icons-material/Instagram";
 import  PinterestIcon  from "@mui/icons-material/Pinterest";
-import  YoutubeIcon  from "@mui/icons-material/Youtube";
+import  YoutubeIcon  from "@mui/icons-material/YouTube";
 import FaceBookIcon from "@mui/icons-material/Facebook"
 import { useRouter } from "next/router";
 
