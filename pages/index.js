@@ -21,9 +21,11 @@ import Footer from '../components/Footer'
 import StoryblokClient from "storyblok-js-client";
 import DynamicComponent from '../components/DynamicComponent'
 import  { useStoryblok } from "../lib/storyblok";
+import { useState } from 'react'
 // import MainPostsSection from '../components/MainPostsSection'
 
- 
+const faker  = require('faker');
+
 const Storyblok = new StoryblokClient({
   accessToken: "VF9PTpnwlp3TqQM0lsVUwwtt",
   cache: {
@@ -32,12 +34,13 @@ const Storyblok = new StoryblokClient({
   },
 });
 // export default function Home({ story, preview, images, posts }) {
-export default function Home({  posts, images }) {
+export default function Home({  posts }) {
 
   const enableBridge = true; // load the storyblok bridge everywhere
   // const enableBridge = preview; // enable bridge only in prevew mode
  
   // story = useStoryblok(story, enableBridge);
+  // const [images, setImages] = useState(photos);
   return (
     <div className="">
     <div className=" block ">
@@ -93,7 +96,7 @@ export default function Home({  posts, images }) {
                 
               </div> */}
               <div className="container mx-auto ">
-                <MediumSection posts={posts}  />
+                <MediumSection posts={posts}/>
               </div>
 
             </div>
@@ -313,6 +316,15 @@ export async function getServerSideProps(context){
   
   // const images = await fetch('https://jsonplaceholder.typicode.com/photos')
   // .then((res) => res.json())
+
+  // const photos = [...Array(20)].map((_,i) => (
+  //   {
+  //       ...faker.
+  //       id: i
+  //   }))
+  //       // setImages(photos)
+  //       // console.log(photos)
+  
   return{
     props:{
       posts,

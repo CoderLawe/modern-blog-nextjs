@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import LeftMedium from "./LeftMedium"
 import RightMedium from "./RightMedium"
 import HomePosts from "./HomePosts";
-function MediumSection({ posts, images}) {
+function MediumSection({ posts}) {
 
     const [specPost, setSpecPost] = useState([]);
 
@@ -13,7 +13,7 @@ function MediumSection({ posts, images}) {
         <div className="flex justify-center flex-col space-y-10 divide-y-2 ">
             {specPost.slice(0,1).map(post => (
                 <>
-                    <LeftMedium title={post.title} body={post.body} id={post.id}/>
+                    <LeftMedium title={post.title} body={post.body} id={post.id} />
                 </>
             ))}
 
