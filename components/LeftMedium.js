@@ -6,7 +6,19 @@ function LeftMedium({title, body, id, image}) {
                 {/* Left side */}
                 
                 <div className="h-[300px]  md:h-[200px] md:w-[300px] relative">
-                    <Image src={image.thumbnailUrl} layout="fill" objectFit="cover"/>
+                    {
+                        image ? 
+                            (
+                                <Image src={image.thumbnailUrl} layout="fill" objectFit="cover"/>
+
+                            ):
+                                (
+                                    <Image src="/images/greece.jpg" layout="fill" objectFit="cover"/>
+
+                                )
+
+                    }
+                    
                 </div>
 
                 {/* Right side */}
@@ -14,7 +26,7 @@ function LeftMedium({title, body, id, image}) {
                 <div className="flex-col space-y-6">
                     <h6 className="category">Lifestyle</h6>
 
-                    <h5 className="font-serif text-3xl font-extralight text-gray-700 truncate max-w-[250px]">{title}</h5>
+                    <h5 className="font-serif text-3xl font-extralight text-gray-700 truncate max-w-[250px]">Post title{title}</h5>
 
                     <h6 className="category">December 11, 2021</h6>
 

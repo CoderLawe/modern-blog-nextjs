@@ -6,7 +6,7 @@ function RightMedium({ title, body, id }) {
                 {/* Left side */}
                 
                 <div className="md:order-2 h-[300px]  md:h-[200px] md:w-[300px] relative">
-                    <Image src="/images/greece.jpg" layout="fill" objectFit="cover"/>
+                    {/* <Image src="/images/greece.jpg" layout="fill" objectFit="cover"/> */}
                 </div>
 
                 {/* Right side */}

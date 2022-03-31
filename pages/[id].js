@@ -8,34 +8,6 @@ import Tag from "../components/Tag";
 import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 
-export const getStaticPaths = async () => {
-    const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-    const data = await res.json();
-    const paths = data.map(post => {
-        return {
-            // Gets the params for each post and route
-            params:{id: post.id.toString()}
-        }
-    })
-    return{
-       paths,
-       fallback:true
-    //    If route does not exist show 404 (fallback)
-    }
-}
-
-export const getStaticProps = async (context) => {
-       const id = context.params.id
-    //    From params from paths returned from getStaticPaths
-       const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-       const data = await res.json()
-
-       return{
-           props:{
-               post:data
-           }
-       }
-}
 export default function Detail({ post }){
     return(
         <div>
@@ -241,4 +213,33 @@ export default function Detail({ post }){
            
         </div>
     )
+}
+
+export const getStaticPaths = async () => {
+    const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const data = await res.json();
+    const paths = data.map(post => {
+        return {
+            // Gets the params for each post and route
+            params:{id: post.id.toString()}
+        }
+    })
+    return{
+       paths,
+       fallback:true
+    //    If route does not exist show 404 (fallback)
+    }
+}
+
+export const getStaticProps = async (context) => {
+       const id = context.params.id
+    //    From params from paths returned from getStaticPaths
+       const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+       const data = await res.json()
+
+       return{
+           props:{
+               post:data
+           }
+       }
 }

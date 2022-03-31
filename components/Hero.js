@@ -21,8 +21,8 @@ function Hero() {
                 <Image src="/images/greece.jpg" layout="fill" objectFit="cover"/>
 
                 <div className="flex">
-                    
-                    <NavCard title="Exploring Greece" body=" Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+
+                    <NavCard  title="Exploring Greece" body=" Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
                                 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
                                 laboris nisi ut aliquip ex ea commodo consequat."/>
                 </div>

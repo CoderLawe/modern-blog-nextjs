@@ -26,13 +26,13 @@ import { useState } from 'react'
 
 const faker  = require('faker');
 
-const Storyblok = new StoryblokClient({
-  accessToken: "VF9PTpnwlp3TqQM0lsVUwwtt",
-  cache: {
-    clear: "auto",
-    type: "memory",
-  },
-});
+// const Storyblok = new StoryblokClient({
+//   accessToken: "VF9PTpnwlp3TqQM0lsVUwwtt",
+//   cache: {
+//     clear: "auto",
+//     type: "memory",
+//   },
+// });
 // export default function Home({ story, preview, images, posts }) {
 export default function Home({  posts }) {
 
@@ -41,6 +41,7 @@ export default function Home({  posts }) {
  
   // story = useStoryblok(story, enableBridge);
   // const [images, setImages] = useState(photos);
+  console.log("posts",posts)
   return (
     <div className="">
     <div className=" block ">
@@ -96,7 +97,9 @@ export default function Home({  posts }) {
                 
               </div> */}
               <div className="container mx-auto ">
+                <h1>Testing</h1>
                 <MediumSection posts={posts}/>
+
               </div>
 
             </div>
@@ -313,6 +316,7 @@ export async function getServerSideProps(context){
   
   const posts = await fetch('https://jsonplaceholder.typicode.com/posts')
   .then(res => res.json());
+  console.log('posts',posts)
   
   // const images = await fetch('https://jsonplaceholder.typicode.com/photos')
   // .then((res) => res.json())
