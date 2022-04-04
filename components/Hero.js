@@ -23,7 +23,7 @@ function Hero() {
                 <div className="flex">
 
                     <NavCard  title="Exploring Greece" body=" Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
-                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+                                ut labore et dolore magna aliqua. devUt enim ad minim veniam, quis nostrud exercitation ullamco 
                                 laboris nisi ut aliquip ex ea commodo consequat."/>
                 </div>
                 

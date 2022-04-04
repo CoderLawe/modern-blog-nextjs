@@ -8,31 +8,32 @@ function MediumSection({ posts}) {
 
     useEffect(() => {
         setSpecPost(posts)
-        console.log('specPost', specPost)
+        console.log('specPost', posts)
     },[])
     return (
         <div className="flex justify-center flex-col space-y-10 divide-y-2 ">
+          
             {posts.slice(0,1).map(post => (
                 <>
-                    <LeftMedium title={post.title} body={post.body} id={post.id} />
+                    <LeftMedium key={post.id} title={post.data().title} body={post.data().body} id={post.id}  posts={post} />
                 </>
             ))}
 
             {posts.slice(1,2).map(post => (
                 <>
-                    <RightMedium title={post.title} body={post.body} id={post.id}/>
+                    <RightMedium  key={post.id} title={post.data().title} body={post.data().body} id={post.id} posts={post}/>
                 </>
             ))}
 
             {posts.slice(2,3).map(post => (
                 <>
-                    <LeftMedium title={post.title} body={post.body} id={post.id}/>
+                    <LeftMedium key={post.id} title={post.data().title} body={post.data().body} id={post.id} posts={post} />
                 </>
             ))}
 
             {posts.slice(3,4).map(post => (
                 <>
-                    <RightMedium title={post.title} body={post.body} id={post.id}/>
+                    <RightMedium  key={post.id} title={post.data().title} body={post.data().body} id={post.id} posts={post}/>
                 </>
             ))}
            

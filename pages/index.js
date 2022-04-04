@@ -21,7 +21,10 @@ import Footer from '../components/Footer'
 import StoryblokClient from "storyblok-js-client";
 import DynamicComponent from '../components/DynamicComponent'
 import  { useStoryblok } from "../lib/storyblok";
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { onSnapshot, collection, query, orderBy} from "@firebase/firestore";
+import { db } from "../firebase";
+
 // import MainPostsSection from '../components/MainPostsSection'
 
 const faker  = require('faker');
@@ -34,14 +37,23 @@ const faker  = require('faker');
 //   },
 // });
 // export default function Home({ story, preview, images, posts }) {
-export default function Home({  posts }) {
+export default function Home() {
 
   const enableBridge = true; // load the storyblok bridge everywhere
   // const enableBridge = preview; // enable bridge only in prevew mode
  
   // story = useStoryblok(story, enableBridge);
   // const [images, setImages] = useState(photos);
-  console.log("posts",posts)
+  // console.log("posts",posts)
+
+  const [articles, setArticles] = useState([]);
+
+    useEffect(() => {
+        onSnapshot(query(collection(db,'articles'),orderBy("timestamp","desc")), snapshot => {
+          setArticles(snapshot.docs)
+        })
+        console.log("posts",articles)
+    },[db])
   return (
     <div className="">
     <div className=" block ">
@@ -98,7 +110,7 @@ export default function Home({  posts }) {
               </div> */}
               <div className="container mx-auto ">
                 <h1>Testing</h1>
-                <MediumSection posts={posts}/>
+                <MediumSection key="12345" posts={articles}/>
 
               </div>
 
@@ -312,27 +324,29 @@ export default function Home({  posts }) {
   )
 }
 
-export async function getServerSideProps(context){
+// export async function getServerSideProps(context){
   
-  const posts = await fetch('https://jsonplaceholder.typicode.com/posts')
-  .then(res => res.json());
-  console.log('posts',posts)
+//   const posts = await fetch('https://jsonplaceholder.typicode.com/posts')
+//   .then(res => res.json());
+//   console.log('posts',posts)
   
-  // const images = await fetch('https://jsonplaceholder.typicode.com/photos')
-  // .then((res) => res.json())
+  
+//   // const images = await fetch('https://jsonplaceholder.typicode.com/photos')
+//   // .then((res) => res.json())
 
-  // const photos = [...Array(20)].map((_,i) => (
-  //   {
-  //       ...faker.
-  //       id: i
-  //   }))
-  //       // setImages(photos)
-  //       // console.log(photos)
+//   // const photos = [...Array(20)].map((_,i) => (
+//   //   {
+//   //       ...faker.
+//   //       id: i
+//   //   }))
+//   //       // setImages(photos)
+//   //       // console.log(photos)
   
-  return{
-    props:{
-      posts,
-  }
+//   return{
+//     props:{
+//       posts,
+//   }
+// }
 // }
 // export async function getStaticProps({ preview = false }) {
 //   // home is the default slug for the homepage in Storyblok
@@ -359,5 +373,3 @@ export async function getServerSideProps(context){
 //   };
 // }
 // 
-  }
-}

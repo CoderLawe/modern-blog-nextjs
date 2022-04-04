@@ -7,8 +7,28 @@ import InstagramGrid from "../components/InstagramGrid";
 import Tag from "../components/Tag";
 import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
+import { useContext, useEffect, useState } from "react";
+import { DetailContext } from "../components/context/DetailContext";
+import { onSnapshot, collection, query, orderBy} from "@firebase/firestore";
+import { db } from "../firebase";
 
-export default function Detail({ post }){
+export default function Detail(){
+    const[selectedPost, setSelectedPost] = useContext(DetailContext);
+
+    const [articles, setArticles] = useState([]);
+    const [article, setArticle] = useState({});
+
+    const filterArticles = () => {
+        articles.filter(article => article.id === "tPvBbkfGatD2V1SUxfRU").map((selectedArticle) => setArticle(selectedArticle))
+    }
+    useEffect(() => {
+        onSnapshot(query(collection(db,'articles'),orderBy("timestamp","desc")), snapshot => {
+          setArticles(snapshot.docs)
+        })
+
+        filterArticles()
+        console.log("selectedArticle",article)
+    },[db])
     return(
         <div>
             
@@ -25,7 +45,7 @@ export default function Detail({ post }){
                     <div className="">
                         {
                             post && (
-                                <h1 className="italic font-serif text-3xl font-thin">{post.title}</h1>
+                                <h1 className="italic font-serif text-3xl font-thin">{selectedPost.title}</h1>
 
                             )
                         }
@@ -39,7 +59,7 @@ export default function Detail({ post }){
                     {
                         post && (
                             <p className="paragraph-1">
-                            {post.body}
+                            {selectedPost.body}
                             </p>
                         )
                     }
@@ -215,31 +235,31 @@ export default function Detail({ post }){
     )
 }
 
-export const getStaticPaths = async () => {
-    const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-    const data = await res.json();
-    const paths = data.map(post => {
-        return {
-            // Gets the params for each post and route
-            params:{id: post.id.toString()}
-        }
-    })
-    return{
-       paths,
-       fallback:true
-    //    If route does not exist show 404 (fallback)
-    }
-}
+// export const getStaticPaths = async () => {
+//     const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+//     const data = await res.json();
+//     const paths = data.map(post => {
+//         return {
+//             // Gets the params for each post and route
+//             params:{id: post.id.toString()}
+//         }
+//     })
+//     return{
+//        paths,
+//        fallback:true
+//     //    If route does not exist show 404 (fallback)
+//     }
+// }
 
-export const getStaticProps = async (context) => {
-       const id = context.params.id
-    //    From params from paths returned from getStaticPaths
-       const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-       const data = await res.json()
+// export const getStaticProps = async (context) => {
+//        const id = context.params.id
+//     //    From params from paths returned from getStaticPaths
+//        const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+//        const data = await res.json()
 
-       return{
-           props:{
-               post:data
-           }
-       }
-}
+//        return{
+//            props:{
+//                post:data
+//            }
+//        }
+// }
