@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from "next/link";
 import { useContext, useEffect, useState } from 'react';
-import { DetailContext, UpdateBodyContext, UpdateImageContext, UpdateModalContext, UpdateTitleContext } from './context/DetailContext';
-import { onSnapshot, collection, query, orderBy} from "@firebase/firestore";
+import { DeleteModalContext, DetailContext, UpdateBodyContext, UpdateImageContext, UpdateModalContext, UpdateTitleContext } from './context/DetailContext';
+import { onSnapshot, collection, query, orderBy, doc, deleteDoc } from "@firebase/firestore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -13,6 +13,7 @@ function RightMedium({ title, body, id,image }) {
 
     const[selectedPost, setSelectedPost] = useContext(DetailContext);
     const [updateOpen, setUpdateOpen] = useContext(UpdateModalContext);
+    const [deleteOpen, setDeleteOpen] = useContext(DeleteModalContext);
 
     const [articles, setArticles] = useState([]);
     const [article, setArticle] = useState({});
@@ -50,9 +51,18 @@ function RightMedium({ title, body, id,image }) {
 
     }
 
-    const deleteArticle = async (selectedId) => {
-        const articleRef = doc(db,"articles", selectedId)
+    
+    const stageDelete = () => {
+        setSelectedPost({title, body, id, image})
+        setDeleteOpen(true)
+
+    }
+
+    const deleteArticle = async () => {
+
+        const articleRef = doc(db,"articles", selectedPost.id)
         await deleteDoc(articleRef)
+        console.log("Post deleted succesfully!")
     }
     return (
         <div className="md:flex block space-y-4 md:space-y-0 space-x-4 py-5 px-3">
@@ -69,7 +79,7 @@ function RightMedium({ title, body, id,image }) {
                         <h6 className="category">Lifestyle</h6>
 
                         <EditIcon onClick={() => updateSetSelected(title, body, id, image)}className="text-green-400 h-6 cursor-pointer"/>
-                        <DeleteIcon onClick={deleteArticle(id)}className="text-red-500 h-6 cursor-pointer"/>
+                        <DeleteIcon onClick={() => stageDelete()}className="text-red-500 h-6 cursor-pointer"/>
 
                     </div>
                     <h5 className="font-serif text-3xl font-extralight text-gray-700 truncate max-w-[250px]">{title}</h5>

@@ -24,9 +24,9 @@ import StoryblokClient from "storyblok-js-client";
 import DynamicComponent from '../components/DynamicComponent'
 import  { useStoryblok } from "../lib/storyblok";
 import { useContext, useEffect, useState } from 'react'
-import { onSnapshot, collection, query, orderBy, serverTimestamp, addDoc, updateDoc, doc} from "@firebase/firestore";
+import { onSnapshot, collection, query, orderBy, serverTimestamp, addDoc, updateDoc, deleteDoc, doc} from "@firebase/firestore";
 import { db } from "../firebase";
-import { DetailContext, ModalContext, UpdateBodyContext, UpdateImageContext, UpdateModalContext, UpdateTitleContext } from '../components/context/DetailContext'
+import { DetailContext, ModalContext, UpdateBodyContext, UpdateImageContext, UpdateModalContext, DeleteModalContext , UpdateTitleContext } from '../components/context/DetailContext'
 
 // import MainPostsSection from '../components/MainPostsSection'
 
@@ -62,7 +62,7 @@ export default function Home() {
 
   const [selectedPost, setSelectedPost] = useContext(DetailContext);
   const [updateOpen, setUpdateOpen] = useContext(UpdateModalContext);
-
+  const [deleteOpen, setDeleteOpen] = useContext(DeleteModalContext)
   const [articles, setArticles] = useState([]);
   const [open, setOpen] = useContext(ModalContext)
   const [title, setTitle] = useState("");
@@ -95,22 +95,29 @@ export default function Home() {
     setUpdateOpen(false);
   };
 
+  const deleteHandleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+  
+    setDeleteOpen(false);
+  };
+
   const addArticle = async (e) => {
     e.preventDefault();
 
   
-
     await addDoc(collection(db, 'articles'),{
-        title,
-        // username: session.user.username,
-        // userImage:session.user.image,
-        image,
-        body,
-        id:doc.id,
-        timestamp:serverTimestamp(),
-    })
+      title, 
+      image,
+      body,
+      timestamp:serverTimestamp()
+    });
 
     console.log("Article succesfully added!")
+
+
+    
 }
 
 const updateArticle = async (e) => {
@@ -126,6 +133,16 @@ const updateArticle = async (e) => {
   console.log("Post updated!")
 }
 
+const deleteArticle = async () => {
+  const articleRef = doc(db,"articles",selectedPost.id);
+
+  await deleteDoc(articleRef);
+
+  
+  console.log("Article succesfully deleted!")
+  setDeleteOpen(false);
+} 
+
 
 
     useEffect(() => {
@@ -140,6 +157,7 @@ const updateArticle = async (e) => {
       console.log(updateTitle)
 
       stageUpdate()
+
 
     },[selectedPost])
 
@@ -227,6 +245,38 @@ const updateArticle = async (e) => {
 
       {/* Update Modal end */}
 
+
+{/* Delete Modal Start */}
+      <Modal 
+       open={deleteOpen}
+       onClose={deleteHandleClose}
+       aria-labelledby="modal-modal-title"
+       aria-describedby="modal-modal-description"
+       >
+         <Box 
+         sx={style}
+         className="bg-white text-gray-800 focus:outline-none lg:w-[600px]"
+         >
+       
+        <div className="block ">
+            <div className="flex justify-center">
+              <h1 className="font-serif text-lg text-gray-500">Are you sure you want to delete this post</h1>
+            </div>
+
+            <div className="flex justify-center space-x-4">
+              <button onClick={deleteArticle}className="bg-green-500 p-5 font-serif">Yes</button>
+              <button className="bg-red-500 p-5 font-serif">No</button>
+
+
+            </div>
+        </div>
+          
+         
+
+         </Box>
+
+       </Modal>
+       {/* Delete MOdal end */}
 
 
 {/* Modal start */}

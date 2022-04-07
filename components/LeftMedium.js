@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useContext, useState, useEffect } from 'react';
-import { DetailContext, UpdateModalContext } from './context/DetailContext';
+import { DeleteModalContext, DetailContext, UpdateModalContext } from './context/DetailContext';
 import { onSnapshot, collection, query, orderBy} from "@firebase/firestore";
 import  EditIcon  from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -11,6 +11,7 @@ function LeftMedium({title, body, id, image,post}) {
 
     const[selectedPost, setSelectedPost] = useContext(DetailContext);
     const [updateOpen, setUpdateOpen] = useContext(UpdateModalContext);
+    const [deleteOpen, setDeleteOpen] = useContext(DeleteModalContext);
 
     const [articles, setArticles] = useState([]);
     const [article, setArticle] = useState({});
@@ -30,6 +31,12 @@ function LeftMedium({title, body, id, image,post}) {
         setSelectedPost({title,body,id,image})
         // console.log(selectedPost)
         // filterArticles()
+    }
+
+    const stageDelete = () => {
+        setSelectedPost({title, body, id, image})
+        setDeleteOpen(true)
+
     }
 
     const updateSetSelected  = (title, body, id, image) => {
@@ -67,7 +74,7 @@ function LeftMedium({title, body, id, image,post}) {
                         <h6 className="category">Lifestyle</h6>
 
                         <EditIcon onClick={() => updateSetSelected(title, body, id, image)}className="text-green-400 h-6 cursor-pointer"/>
-                        <DeleteIcon className="text-red-500 h-6 cursor-pointer"/>
+                        <DeleteIcon onClick={() => stageDelete()}className="text-red-500 h-6 cursor-pointer"/>
                     </div>
 
                     <h5 className="font-serif text-3xl font-extralight text-gray-700 truncate max-w-[250px]">{title}</h5>
