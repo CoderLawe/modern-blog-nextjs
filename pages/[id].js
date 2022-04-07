@@ -9,26 +9,47 @@ import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 import { useContext, useEffect, useState } from "react";
 import { DetailContext } from "../components/context/DetailContext";
-import { onSnapshot, collection, query, orderBy} from "@firebase/firestore";
+import { onSnapshot, collection, query, orderBy, doc} from "@firebase/firestore";
 import { db } from "../firebase";
+import { useRouter } from "next/router";
 
 export default function Detail(){
     const[selectedPost, setSelectedPost] = useContext(DetailContext);
 
     const [articles, setArticles] = useState([]);
-    const [article, setArticle] = useState({});
+    const [article, setArticle] = useState([]);
+    const [body, setBody] = useState("");
+    const [title, setTitle] = useState("");
+    const [image, setImage] = useState("")
+    const router = useRouter()
+    const {id} = router.query
+    console.log("id",id)
+
+
 
     const filterArticles = () => {
-        articles.filter(article => article.id === "tPvBbkfGatD2V1SUxfRU").map((selectedArticle) => setArticle(selectedArticle))
+        articles.filter(article => doc.id === router.query).map((selectedArticle) => setArticle(selectedArticle))
     }
     useEffect(() => {
+        
+        // if(article){
+        //     setBody(article.body)
+        //     setImage(article.data().image)
+        //     setTitle(article.data().title)
+        // }
+       
         onSnapshot(query(collection(db,'articles'),orderBy("timestamp","desc")), snapshot => {
           setArticles(snapshot.docs)
         })
 
         filterArticles()
-        console.log("selectedArticle",article)
+        console.log("selectedArticle_",selectedPost)
     },[db])
+
+    useEffect(() => {
+        setTitle(selectedPost.title)
+        setBody(selectedPost.body)
+    },[])
     return(
         <div>
             
@@ -43,12 +64,11 @@ export default function Detail(){
                     {/* <Image src="/images/greece.jpg" height={500} width={720} objectFit="cover"/> */}
 
                     <div className="">
-                        {
-                            post && (
+                        
                                 <h1 className="italic font-serif text-3xl font-thin">{selectedPost.title}</h1>
 
-                            )
-                        }
+                            
+                        
                     </div>
 
                     <h5 className="date">December 13, 2021</h5>
@@ -56,13 +76,12 @@ export default function Detail(){
                     <div className="block space-y-4 mx-5">
                         {/* Paragraph text */}
 
-                    {
-                        post && (
+                    
                             <p className="paragraph-1">
                             {selectedPost.body}
                             </p>
-                        )
-                    }
+                        
+                    
                        
 
                         <p className="paragraph-1">

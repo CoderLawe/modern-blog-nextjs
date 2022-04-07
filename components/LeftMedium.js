@@ -1,13 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useContext, useState, useEffect } from 'react';
-import { DetailContext } from './context/DetailContext';
+import { DetailContext, UpdateModalContext } from './context/DetailContext';
+import { onSnapshot, collection, query, orderBy} from "@firebase/firestore";
+import  EditIcon  from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { db } from "../firebase";
+
 function LeftMedium({title, body, id, image,post}) {
 
     const[selectedPost, setSelectedPost] = useContext(DetailContext);
-
-
-   
+    const [updateOpen, setUpdateOpen] = useContext(UpdateModalContext);
 
     const [articles, setArticles] = useState([]);
     const [article, setArticle] = useState({});
@@ -26,7 +29,15 @@ function LeftMedium({title, body, id, image,post}) {
     const setSelected  = (title, body, id, image) => {
         setSelectedPost({title,body,id,image})
         // console.log(selectedPost)
-        filterArticles()
+        // filterArticles()
+    }
+
+    const updateSetSelected  = (title, body, id, image) => {
+        setSelectedPost({title,body,id,image})
+        // console.log(selectedPost)
+        // filterArticles()
+        setUpdateOpen(true)
+
     }
     return (
 
@@ -35,15 +46,15 @@ function LeftMedium({title, body, id, image,post}) {
                 
                 <div className="h-[300px]  md:h-[200px] md:w-[300px] relative">
                     {
-                        image ? 
+                    image ? 
+                        (
+                            <Image src={image} layout="fill" objectFit="cover"/>
+
+                        ):
                             (
-                                <Image src={image.thumbnailUrl} layout="fill" objectFit="cover"/>
+                                <Image src="/images/greece.jpg" layout="fill" objectFit="cover"/>
 
-                            ):
-                                (
-                                    <Image src="/images/greece.jpg" layout="fill" objectFit="cover"/>
-
-                                )
+                            )
 
                     }
                     
@@ -52,7 +63,12 @@ function LeftMedium({title, body, id, image,post}) {
                 {/* Right side */}
 
                 <div className="flex-col space-y-6">
-                    <h6 className="category">Lifestyle</h6>
+                    <div className="flex space-x-8">
+                        <h6 className="category">Lifestyle</h6>
+
+                        <EditIcon onClick={() => updateSetSelected(title, body, id, image)}className="text-green-400 h-6 cursor-pointer"/>
+                        <DeleteIcon className="text-red-500 h-6 cursor-pointer"/>
+                    </div>
 
                     <h5 className="font-serif text-3xl font-extralight text-gray-700 truncate max-w-[250px]">{title}</h5>
 
@@ -63,7 +79,7 @@ function LeftMedium({title, body, id, image,post}) {
                     </div>
 
                 <Link href={"/" + id} key={id}>            
-                    <button onClick={() => setSelected(title, body, image, id)}className="standard-btn">Read More</button>
+                    <button onClick={() => setSelected(title, body, id, image)}className="standard-btn">Read More</button>
                 </Link> 
                 </div>
             </div>

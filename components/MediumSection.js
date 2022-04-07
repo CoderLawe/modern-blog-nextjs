@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import LeftMedium from "./LeftMedium"
 import RightMedium from "./RightMedium"
 import HomePosts from "./HomePosts";
+
 function MediumSection({ posts}) {
 
     const [specPost, setSpecPost] = useState([]);
@@ -15,25 +16,25 @@ function MediumSection({ posts}) {
           
             {posts.slice(0,1).map(post => (
                 <>
-                    <LeftMedium key={post.id} title={post.data().title} body={post.data().body} id={post.id}  posts={post} />
+                    <LeftMedium key={post.id} title={post.data().title} body={post.data().body} image={post.data().image} id={post.id}  posts={post} />
                 </>
             ))}
 
             {posts.slice(1,2).map(post => (
                 <>
-                    <RightMedium  key={post.id} title={post.data().title} body={post.data().body} id={post.id} posts={post}/>
+                    <RightMedium  key={post.id} title={post.data().title} image={post.data().image} body={post.data().body} id={post.id} posts={post}/>
                 </>
             ))}
 
             {posts.slice(2,3).map(post => (
                 <>
-                    <LeftMedium key={post.id} title={post.data().title} body={post.data().body} id={post.id} posts={post} />
+                    <LeftMedium key={post.id} title={post.data().title}  image={post.data().image} body={post.data().body} id={post.id} posts={post} />
                 </>
             ))}
 
             {posts.slice(3,4).map(post => (
                 <>
-                    <RightMedium  key={post.id} title={post.data().title} body={post.data().body} id={post.id} posts={post}/>
+                    <RightMedium  key={post.id} title={post.data().title} image={post.data().image} body={post.data().body} id={post.id} posts={post}/>
                 </>
             ))}
            

@@ -15,15 +15,18 @@ import Latest from '../components/Latest'
 import { StarIcon } from '@heroicons/react/solid'
 import ProductSmall from '../components/ProductSmall'
 import Footer from '../components/Footer'
- 
+import  Modal  from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+
 // The Storyblok Client
 // import Storyblok from "../lib/storyblok";
 import StoryblokClient from "storyblok-js-client";
 import DynamicComponent from '../components/DynamicComponent'
 import  { useStoryblok } from "../lib/storyblok";
-import { useEffect, useState } from 'react'
-import { onSnapshot, collection, query, orderBy} from "@firebase/firestore";
+import { useContext, useEffect, useState } from 'react'
+import { onSnapshot, collection, query, orderBy, serverTimestamp, addDoc, updateDoc, doc} from "@firebase/firestore";
 import { db } from "../firebase";
+import { DetailContext, ModalContext, UpdateBodyContext, UpdateImageContext, UpdateModalContext, UpdateTitleContext } from '../components/context/DetailContext'
 
 // import MainPostsSection from '../components/MainPostsSection'
 
@@ -36,6 +39,17 @@ const faker  = require('faker');
 //     type: "memory",
 //   },
 // });
+
+const style = {
+  position: 'absolute',
+  top: '40%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  boxShadow: 24,
+  p: 4,
+
+
+}
 // export default function Home({ story, preview, images, posts }) {
 export default function Home() {
 
@@ -46,7 +60,88 @@ export default function Home() {
   // const [images, setImages] = useState(photos);
   // console.log("posts",posts)
 
+  const [selectedPost, setSelectedPost] = useContext(DetailContext);
+  const [updateOpen, setUpdateOpen] = useContext(UpdateModalContext);
+
   const [articles, setArticles] = useState([]);
+  const [open, setOpen] = useContext(ModalContext)
+  const [title, setTitle] = useState("");
+  const [image, setImage] = useState("")
+  // Use storage for image later
+  const [body, setBody] = useState("");
+
+  // For updating
+ 
+  const [updateTitle, setUpdateTitle] = useContext(UpdateTitleContext);
+  const [updateImage, setUpdateImage] = useContext(UpdateImageContext);
+  const [updateBody, setUpdateBody] = useContext(UpdateBodyContext);
+  
+  
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+  
+    setOpen(false);
+    setUpdateOpen(false);
+  };
+
+  const updateHandleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+  
+    setUpdateOpen(false);
+  };
+
+  const addArticle = async (e) => {
+    e.preventDefault();
+
+  
+
+    await addDoc(collection(db, 'articles'),{
+        title,
+        // username: session.user.username,
+        // userImage:session.user.image,
+        image,
+        body,
+        id:doc.id,
+        timestamp:serverTimestamp(),
+    })
+
+    console.log("Article succesfully added!")
+}
+
+const updateArticle = async (e) => {
+  e.preventDefault()
+  const articleRef = doc(db,"articles",selectedPost.id);
+
+  
+  await updateDoc( articleRef, {
+      title:updateTitle,
+      image:updateImage,
+      body:updateBody
+  })
+  console.log("Post updated!")
+}
+
+
+
+    useEffect(() => {
+      const stageUpdate = () => {
+        if(selectedPost){
+          setUpdateTitle(selectedPost.title)
+          setUpdateImage(selectedPost.image)
+          setUpdateBody(selectedPost.body)
+        }
+       
+      }
+      console.log(updateTitle)
+
+      stageUpdate()
+
+    },[selectedPost])
 
     useEffect(() => {
         onSnapshot(query(collection(db,'articles'),orderBy("timestamp","desc")), snapshot => {
@@ -54,6 +149,8 @@ export default function Home() {
         })
         console.log("posts",articles)
     },[db])
+
+
   return (
     <div className="">
     <div className=" block ">
@@ -70,6 +167,123 @@ export default function Home() {
           <Header />
         </div>
               {/* Hero Section */}
+
+
+
+
+{/* Modal start */}
+
+  {/* UpdateModal start */}
+  <Modal 
+       open={updateOpen}
+       onClose={updateHandleClose}
+       aria-labelledby="modal-modal-title"
+       aria-describedby="modal-modal-description"
+       >
+         <Box 
+         sx={style}
+         className="bg-white text-gray-800 focus:outline-none lg:w-[600px]"
+         >
+        <div>
+          <div className="flex justify-center">
+            <div className="flex-col space-y-5">
+              <div className="flex-col space-y-5">
+                <h1 className="flex justify-center">Title</h1>
+                <input onChange={(e) => setUpdateTitle(e.target.value)} className="px-5 py-5 focus:outline-none border border-transparent focus:border-yellow-700 font-serif text-gray-500 rounded-lg transform transition-all duration-500 ease-out " value={updateTitle} placeholder="Enter a title here"/>
+              </div>
+            
+
+            {/* Image URL */}
+
+            <div className="flex-col space-y-5">
+                <h1 className="flex justify-center">Image URL</h1>
+                <input onChange={(e) => setUpdateImage(e.target.value)}className="px-5 py-5 focus:outline-none border border-transparent focus:border-yellow-700 font-serif text-gray-500 rounded-lg transform transition-all duration-500 ease-out " value={updateImage} placeholder="Enter an image URL here"/>
+              </div>
+            
+
+            {/* Body */}
+
+            <div className="flex-col space-y-5">
+                <h1 className="flex justify-center">Content</h1>
+                <textarea onChange={(e) => setUpdateBody(e.target.value)}className="px-5 py-5 focus:outline-none border border-transparent focus:border-yellow-700 font-serif text-gray-500 rounded-lg transform transition-all duration-500 ease-out " value={updateBody} placeholder="Enter content here"/>
+              </div>
+
+              <div className="flex justify-center">
+                <button  type="submit" onClick={updateArticle} className="bg-black border border-transparent hover:border-header-brown hover:bg-white hover:text-black px-8 py-5 text-gray-200 font-serif transform transition-all duration-300 ease-out">Submit</button>
+              </div>
+            
+            </div>
+             
+             
+          </div>
+
+        </div>
+          
+         
+
+         </Box>
+
+       </Modal>
+
+      {/* Update Modal end */}
+
+
+
+{/* Modal start */}
+
+  {/* MOdal start */}
+  <Modal 
+       open={open}
+       onClose={handleClose}
+       aria-labelledby="modal-modal-title"
+       aria-describedby="modal-modal-description"
+       >
+         <Box 
+         sx={style}
+         className="bg-white text-gray-800 focus:outline-none lg:w-[600px]"
+         >
+        <div>
+          <div className="flex justify-center">
+            <div className="flex-col space-y-5">
+              <div className="flex-col space-y-5">
+                <h1 className="flex justify-center">Title</h1>
+                <input onChange={(e) => setTitle(e.target.value)}className="px-5 py-5 focus:outline-none border border-transparent focus:border-yellow-700 font-serif text-gray-500 rounded-lg transform transition-all duration-500 ease-out " value={title} placeholder="Enter a title here"/>
+              </div>
+            
+
+            {/* Image URL */}
+
+            <div className="flex-col space-y-5">
+                <h1 className="flex justify-center">Image URL</h1>
+                <input onChange={(e) => setImage(e.target.value)}className="px-5 py-5 focus:outline-none border border-transparent focus:border-yellow-700 font-serif text-gray-500 rounded-lg transform transition-all duration-500 ease-out " value={image} placeholder="Enter an image URL here"/>
+              </div>
+            
+
+            {/* Body */}
+
+            <div className="flex-col space-y-5">
+                <h1 className="flex justify-center">Content</h1>
+                <textarea onChange={(e) => setBody(e.target.value)}className="px-5 py-5 focus:outline-none border border-transparent focus:border-yellow-700 font-serif text-gray-500 rounded-lg transform transition-all duration-500 ease-out " value={body} placeholder="Enter content here"/>
+              </div>
+
+              <div className="flex justify-center">
+                <button  onClick={addArticle} className="bg-black border border-transparent hover:border-header-brown hover:bg-white hover:text-black px-8 py-5 text-gray-200 font-serif transform transition-all duration-300 ease-out">Submit</button>
+              </div>
+            
+            </div>
+             
+             
+          </div>
+
+        </div>
+          
+         
+
+         </Box>
+
+       </Modal>
+
+      {/* Modal end */}
 
               <Hero />
             <div className="flex justify-center">

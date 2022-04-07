@@ -4,12 +4,15 @@ import  InstagramIcon  from "@mui/icons-material/Instagram";
 import  PinterestIcon  from "@mui/icons-material/Pinterest";
 import  YoutubeIcon  from "@mui/icons-material/YouTube";
 import FaceBookIcon from "@mui/icons-material/Facebook"
+import AddIcon from "@mui/icons-material/Add"
 import { useRouter } from "next/router";
-
+import { ModalContext } from "./context/DetailContext";
+import { useContext } from "react";
 
 function Header() {
 
     const router = useRouter();
+    const [open, setOpen] = useContext(ModalContext)
     return (
         <header className="flex-col">
         {/* Large screen header */}
@@ -59,6 +62,8 @@ function Header() {
                 </div>
 
                 <div className="pr-10 flex justify-end space-x-3">
+                <AddIcon onClick={() => setOpen(true)} className="h-6 text-gray-800 cursor-pointer"/>
+
                     <ShoppingCartIcon className="h-6 text-gray-800" />
                     <SearchIcon className="h-6 text-gray-800" />
 
@@ -78,6 +83,7 @@ function Header() {
 
                 {/* Right side */}
                 <div className="flex space-x-4">
+
                     <ShoppingCartIcon className="h-6 text-gray-200"/>
                     <SearchIcon className="h-6 text-gray-200"/>
 
