@@ -65,7 +65,7 @@ export default function Detail(){
 
                     <div className="">
                         
-                                <h1 className="italic font-serif text-3xl font-thin">{selectedPost.title}</h1>
+                                <h1 className="italic font-serif text-3xl font-thin">{selectedPost?.title}</h1>
 
                             
                         
@@ -78,7 +78,7 @@ export default function Detail(){
 
                     
                             <p className="paragraph-1">
-                            {selectedPost.body}
+                            {selectedPost?.body}
                             </p>
                         
                     

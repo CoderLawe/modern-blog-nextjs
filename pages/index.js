@@ -27,6 +27,7 @@ import { useContext, useEffect, useState } from 'react'
 import { onSnapshot, collection, query, orderBy, serverTimestamp, addDoc, updateDoc, deleteDoc, doc} from "@firebase/firestore";
 import { db } from "../firebase";
 import { DetailContext, ModalContext, UpdateBodyContext, UpdateImageContext, UpdateModalContext, DeleteModalContext , UpdateTitleContext } from '../components/context/DetailContext'
+import LoadingScreen from '../components/LoadingScreen'
 
 // import MainPostsSection from '../components/MainPostsSection'
 
@@ -76,6 +77,9 @@ export default function Home() {
   const [updateImage, setUpdateImage] = useContext(UpdateImageContext);
   const [updateBody, setUpdateBody] = useContext(UpdateBodyContext);
   
+// Loading screen
+  const [loading, setLoading] = useState(true);
+
   
 
   const handleClose = (event, reason) => {
@@ -145,6 +149,15 @@ const deleteArticle = async () => {
 
 
 
+useEffect(() => {
+    setTimeout(() => {
+        setLoading(false)
+        console.log('Loading', loading)
+    },5000)
+},[])
+
+
+
     useEffect(() => {
       const stageUpdate = () => {
         if(selectedPost){
@@ -173,7 +186,7 @@ const deleteArticle = async () => {
     <div className="">
     <div className=" block ">
       <Head>
-        <title>Create Next App</title>
+        <title>Blog NextJs | Lawe Sosah</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -186,7 +199,7 @@ const deleteArticle = async () => {
         </div>
               {/* Hero Section */}
 
-
+      <LoadingScreen />
 
 
 {/* Modal start */}

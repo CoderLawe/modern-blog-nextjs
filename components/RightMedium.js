@@ -58,12 +58,12 @@ function RightMedium({ title, body, id,image }) {
 
     }
 
-    const deleteArticle = async () => {
+    // const deleteArticle = async () => {
 
-        const articleRef = doc(db,"articles", selectedPost.id)
-        await deleteDoc(articleRef)
-        console.log("Post deleted succesfully!")
-    }
+    //     const articleRef = doc(db,"articles", selectedPost.id)
+    //     await deleteDoc(articleRef)
+    //     console.log("Post deleted succesfully!")
+    // }
     return (
         <div className="md:flex block space-y-4 md:space-y-0 space-x-4 py-5 px-3">
                 {/* Left side */}
