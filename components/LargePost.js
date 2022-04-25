@@ -1,7 +1,22 @@
 import Image from "next/image";
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // You can also use <link> for styles
+import { useEffect } from "react";
+
+
 function LargePost() {
+
+    useEffect(() => {
+        AOS.init({
+          easing: "ease-out-cubic",
+          once: false,
+          offset: 50,
+        });
+      }, []);
+
+
     return (
-        <div className="flex-col  space-y-4">
+        <div data-aos="fade-in" data-aos-duration="4000" className="flex-col  space-y-4">
             {/* Top part with image */}
             <div className="md:order-2 h-[300px] w-[400px] md:h-[200px] md:w-[610px] relative">
                     <Image src="/images/greece.jpg" layout="fill" objectFit="cover"/>
@@ -9,15 +24,15 @@ function LargePost() {
             {/* Title, category and Date */}
             <div className="flex justify-start">
                 <div className="flex-col space-y-3 items-center">
-                    <h6 className="category">Travel</h6>
-                    <h1 className="text-gray-600 md:text-xl text-2xl font-serif font-bold">Exploring Greece</h1>
-                    <h6 className="text-gray-500 text-sm font-serif">December 10, 2021</h6>
+                    <h6 data-aos="fade-in" data-aos-duration="3000" className="category">Travel</h6>
+                    <h1 data-aos="fade-in" data-aos-duration="4000" className="text-gray-600 md:text-xl text-2xl font-serif font-bold">Exploring Greece</h1>
+                    <h6 data-aos="fade-in" data-aos-duration="4000" className="text-gray-500 text-sm font-serif">December 10, 2021</h6>
 
                 </div>
             </div>
 
             {/* Text */}
-            <div className="md:w-[610px] w-[380px]  mt-6 ">
+            <div data-aos="fade-up" data-aos-duration="4000" className="md:w-[610px] w-[380px]  mt-6 ">
                 <p className="text-gray-500 font-serif md:text-sm">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                 sed do eiusmod tempor incididunt ut labore et dolore magna 

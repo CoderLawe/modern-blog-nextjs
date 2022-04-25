@@ -17,6 +17,8 @@ import ProductSmall from '../components/ProductSmall'
 import Footer from '../components/Footer'
 import  Modal  from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import ScrollAnimation from 'react-animate-on-scroll';
+import "animate.css/animate.min.css";
 
 // The Storyblok Client
 // import Storyblok from "../lib/storyblok";
@@ -153,7 +155,7 @@ useEffect(() => {
     setTimeout(() => {
         setLoading(false)
         console.log('Loading', loading)
-    },5000)
+    },10000)
 },[])
 
 
@@ -183,23 +185,27 @@ useEffect(() => {
 
 
   return (
-    <div className="">
-    <div className=" block ">
-      <Head>
+    <div className={loading && 'bg-coolYellow'}>
+   
+   <Head>
         <title>Blog NextJs | Lawe Sosah</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
     <main>
 
         {/*  Header section */}
-
-        <div className=" sticky top-0 z-50 ">
+      {loading ? (
+        <LoadingScreen className={loading ? "flex": "hidden"}/>
+      ): (
+        <div data-aos="fade-up" data-aos-duration="4000" className={loading ? "hidden" : "flex"}>
+          
+        <div className="transition-all ease-in duration-500">
+           <div className=" sticky top-0 z-50 ">
           <Header />
         </div>
               {/* Hero Section */}
 
-      <LoadingScreen />
+     
 
 
 {/* Modal start */}
@@ -589,7 +595,9 @@ useEffect(() => {
           
         </div>
 
-
+        </div>
+        </div>
+      )}
 
     </main>
           <div className="bottom-0">
@@ -597,7 +605,6 @@ useEffect(() => {
 
           </div>
         </div>
-      </div>
   )
 }
 

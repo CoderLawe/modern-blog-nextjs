@@ -1,6 +1,19 @@
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // You can also use <link> for styles
+import { useEffect } from 'react';
+
 function Newsletter() {
+
+
+    useEffect(() => {
+        AOS.init({
+          easing: "ease-out-cubic",
+          once: true,
+          offset: 50,
+        });
+      }, []);
     return (
-        <div className="md:flex block space-y-6 md:space-y-0 mx-12 text-center justify-between bg-gray-100 px-5 py-6 shadow-md">
+        <div data-aos="fade-in"  className="md:flex block space-y-6 md:space-y-0 mx-12 text-center justify-between bg-gray-100 px-5 py-6 shadow-md">
             <div className="flex-col gap-y-3">
                 {/* Left side */}
                 <h5 className="text-gray-700 font-serif text-lg">Join my Newsletter</h5>

@@ -7,7 +7,8 @@ module.exports = {
       colors:{
         'header-brown':'#A2644F',
         'slight-gray':'#FAFAFA',
-        'brown-gray':'#F2EAE4'
+        'brown-gray':'#F2EAE4',
+        'coolYellow':'#ac9a76'
       }
     },
   },
