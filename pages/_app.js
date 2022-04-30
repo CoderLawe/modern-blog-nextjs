@@ -1,11 +1,18 @@
 import 'tailwindcss/tailwind.css'
 import { DetailProvider } from '../components/context/DetailContext';
 import '../styles/globals.css';
-function MyApp({ Component, pageProps }) {
+import { SessionProvider } from "next-auth/react";
+import { SectionProvider } from '../components/context/SectionsContext';
+function MyApp({ Component, pageProps:{session, pageProps} }) {
   return(
-    <DetailProvider>
-      <Component {...pageProps} />
-    </DetailProvider>
+    <SessionProvider session={session}>
+      <SectionProvider>
+        <DetailProvider>
+          <Component {...pageProps} />
+        </DetailProvider>
+      </SectionProvider>
+    </SessionProvider>
+
   )
 }
 

@@ -2,11 +2,81 @@ import { Carousel } from "react-responsive-carousel";
 import Image from "next/image";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import NavCard from "./NavCard";
+import { CameraIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
+import { useState, useEffect } from "react";
+import { db } from "../firebase";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 
 function Hero() {
     const onClickItem = () => {
 
     }
+
+    const [slides, setSlides] = useState([])
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+
+
+  const addImageToPost = (e) => {
+    const reader = new FileReader();
+
+    if(e.target.files[0]){
+      reader.readAsDataURL(e.target.files[0]);
+
+      reader.onload = (readerEvent) => {
+        setSelectedFile(readerEvent.target.result)
+      }
+    }
+}
+
+  const addCarousel = async () => {
+    if(loading) return;
+
+    setLoading(true);
+
+    // Create a post and add it to the firestore 'posts' collection
+
+    // Get the post id from the newly created post.
+
+    // Upload the image to firebase storage with the post id
+    // Get a download URL from storage to storage and update original post with image
+
+    const docRef = await addDoc(collection(db, 'carousel'), {
+      carouselTitle,
+      carouselImage,
+      carouselTag,
+      carouselDescription,
+      timestamp: serverTimestamp()
+    })
+
+    console.log("New doc added with Id", docRef.id)
+
+    const imageRef = ref(storage, `carousel/${docRef.id}/image`);
+
+    await uploadString(imageRef, selectedFile,"data_url").then(async snapshot => {
+      const downloadURL = await getDownloadURL(imageRef);
+
+      await updateDoc(doc(db, 'carousel', docRef.id),{
+        image: downloadURL
+      })
+    })
+
+    setCarouselOpen(false);
+    setLoading(false);
+    setSelectedFile(null);
+  }
+
+
+
+    useEffect(() => {
+        // Getting carousel slides
+
+        onSnapshot(query(collection(db,'carousel'),orderBy("timestamp","desc")), snapshot => {
+          setSlides(snapshot.docs)
+        })
+        console.log("posts",slides)
+    },[db])
     return (
         <Carousel
         className="mx-0 mt-8"
@@ -17,18 +87,22 @@ function Hero() {
         showThumbs={false}
         interval={3000}
         >
-            <div className="w-full h-[390px] relative ">
-                <Image src="/images/greece.jpg" layout="fill" objectFit="cover"/>
+                {slides.map((slide) => (
+                    <>
+                        <div className="w-full h-[390px] relative ">
 
-                <div className="flex">
+                            <Image src="/images/greece.jpg" layout="fill" objectFit="cover"/>
 
-                    <NavCard  title="Exploring Greece" body=" Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
-                                ut labore et dolore magna aliqua. devUt enim ad minim veniam, quis nostrud exercitation ullamco 
-                                laboris nisi ut aliquip ex ea commodo consequat."/>
-                </div>
-                
-            </div>
+                        <div className="flex">
 
+                            <NavCard  title={slide.data().title} body={slide.data().description} image={slide.data().image}/>
+                        </div>
+
+                        </div>
+
+                    </>
+                ))}
+          
 
             <div className="w-full h-[390px] relative">
                 <Image src="/images/greece.jpg" layout="fill" objectFit="cover"/>

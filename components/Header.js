@@ -8,13 +8,21 @@ import AddIcon from "@mui/icons-material/Add"
 import { useRouter } from "next/router";
 import { ModalContext } from "./context/DetailContext";
 import { useContext } from "react";
+import { useSession } from "next-auth/react";
 
 function Header() {
 
     const router = useRouter();
     const [open, setOpen] = useContext(ModalContext)
+    const {data:session} = useSession()
+    
+
+   
     return (
         <header className="flex-col">
+
+
+
         {/* Large screen header */}
             <div className="hidden md:flex justify-between py-3 bg-header-brown w-screen">
                 {/* Top Header */}
@@ -63,7 +71,7 @@ function Header() {
 
                 <div className="pr-10 flex justify-end space-x-3">
                 <AddIcon onClick={() => setOpen(true)} className="h-6 text-gray-800 cursor-pointer"/>
-
+                    <h5 className="text-gray-800 font-serif cursor-pointer">Login</h5>
                     <ShoppingCartIcon className="h-6 text-gray-800" />
                     <SearchIcon className="h-6 text-gray-800" />
 
@@ -93,7 +101,7 @@ function Header() {
             <div className="md:hidden flex justify-between bg-white px-6 z-50 py-7">
                 <h1 onClick={() => router.push('/')} className="text-3xl text-gray-600 font-serif cursor-pointer">L A W E</h1>
 
-                <MenuIcon className="h-8 text-black cursor-pointer"/>
+                <MenuIcon onClick={() => setOpen(true)} className="h-8 text-black cursor-pointer"/>
             </div>
         </header>
     )

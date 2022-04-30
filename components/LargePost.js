@@ -8,7 +8,7 @@ function LargePost() {
 
     useEffect(() => {
         AOS.init({
-          easing: "ease-out-cubic",
+          easing: "ease-in-back",
           once: false,
           offset: 50,
         });
@@ -16,7 +16,7 @@ function LargePost() {
 
 
     return (
-        <div data-aos="fade-in" data-aos-duration="4000" className="flex-col  space-y-4">
+        <div data-aos="fade-in" data-aos-easing="linear" data-aos-duration="4000" className="flex-col  space-y-4">
             {/* Top part with image */}
             <div className="md:order-2 h-[300px] w-[400px] md:h-[200px] md:w-[610px] relative">
                     <Image src="/images/greece.jpg" layout="fill" objectFit="cover"/>
@@ -32,7 +32,7 @@ function LargePost() {
             </div>
 
             {/* Text */}
-            <div data-aos="fade-up" data-aos-duration="4000" className="md:w-[610px] w-[380px]  mt-6 ">
+            <div data-aos="fade-in-zoom"  data-aos-duration="4000" className="md:w-[610px] w-[380px]  mt-6 ">
                 <p className="text-gray-500 font-serif md:text-sm">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                 sed do eiusmod tempor incididunt ut labore et dolore magna 

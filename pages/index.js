@@ -19,6 +19,7 @@ import  Modal  from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import ScrollAnimation from 'react-animate-on-scroll';
 import "animate.css/animate.min.css";
+import { CameraIcon, TrashIcon } from '@heroicons/react/outline';
 
 // The Storyblok Client
 // import Storyblok from "../lib/storyblok";
@@ -30,6 +31,7 @@ import { onSnapshot, collection, query, orderBy, serverTimestamp, addDoc, update
 import { db } from "../firebase";
 import { DetailContext, ModalContext, UpdateBodyContext, UpdateImageContext, UpdateModalContext, DeleteModalContext , UpdateTitleContext } from '../components/context/DetailContext'
 import LoadingScreen from '../components/LoadingScreen'
+import { CarouselContext } from '../components/context/SectionsContext'
 
 // import MainPostsSection from '../components/MainPostsSection'
 
@@ -84,6 +86,29 @@ export default function Home() {
 
   
 
+  // Carousel
+
+  const filePickerRef = useRef();
+  const [carouselOpen, setCarouselOpen] = useContext(CarouselContext)
+  const [selectedFile, setSelectedFile] = useState(null);
+
+
+  const addImageToPost = () => {
+    const reader = new FileReader();
+
+    if(e.target.files[0]){
+      reader.readAsDataURL(e.target.files[0]);
+
+      reader.onload = (readerEvent) => {
+        setSelectedFile(readerEvent.target.result)
+      }
+    }
+  }
+
+
+  
+
+
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -99,6 +124,14 @@ export default function Home() {
     }
   
     setUpdateOpen(false);
+  };
+
+  const handleCarouselClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+  
+    setCarouselOpen(false);
   };
 
   const deleteHandleClose = (event, reason) => {
@@ -155,7 +188,7 @@ useEffect(() => {
     setTimeout(() => {
         setLoading(false)
         console.log('Loading', loading)
-    },10000)
+    },20000)
 },[])
 
 
@@ -197,7 +230,7 @@ useEffect(() => {
       {loading ? (
         <LoadingScreen className={loading ? "flex": "hidden"}/>
       ): (
-        <div data-aos="fade-up" data-aos-duration="4000" className={loading ? "hidden" : "flex"}>
+        <div data-aos="fade-zoom-in" data-aos-easing="fade-in-back" data-aos-delay="300" data-aos-offset="0" data-aos-duration="4000" className={loading ? "hidden" : "flex"}>
           
         <div className="transition-all ease-in duration-500">
            <div className=" sticky top-0 z-50 ">
@@ -354,6 +387,73 @@ useEffect(() => {
 
       {/* Modal end */}
 
+        {/* Carousel Modal start */}
+        <Modal 
+       open={carouselOpen}
+       onClose={handleCarouselClose}
+       aria-labelledby="modal-modal-title"
+       aria-describedby="modal-modal-description"
+       >
+         <Box 
+         sx={style}
+         className="bg-white text-gray-800 focus:outline-none"
+         >
+          <div className="block">
+            
+          { selectedFile ? (  
+
+              <>
+                <img src={selectedFile} className="w-full object-contain cursor-pointer" onClick={() => setSelectedFile(null)}alt=""/>
+              </>
+
+          ) : (
+
+            <>
+              <div onClick={() => filePickerRef.current.click()} className="flex justify-center p-3 bg-gray-300 mx-24 rounded-full">
+                    <CameraIcon className="h-32 text-red-600 cursor-pointer  hover:text-red-500 transform transition-all duration-300 ease-out" aria-hidden="true"/>
+                </div>
+                  <div>
+                    <input 
+                    ref={filePickerRef}
+                    type="file"
+                    hidden
+                    onChange={addImageToPost}
+                    
+                    />
+                  </div>
+            </>
+
+          )}
+          
+          <div className="flex flex-col justify-center">
+            <div className="text-center"> 
+                <h3 className="text-gray-700 text-lg font-serif mt-5">Upload a Photo here</h3>
+            </div>
+
+          <div className="flex justify-center">
+          <input ref={captionRef} className="focus:outline-none  border-none focus:ring-0 text-gray-400" placeholder="Please enter a caption here" type="text"  
+            // onChange={(e) => setCaption(e.target.value)}
+            />
+
+          </div>
+            
+          </div>
+
+
+              <div className="flex justify-center mt-4">
+                  <button 
+                  disabled={!setSelectedFile}
+                  onClick={uploadPost}
+                  className="bg-red-500 text-center disabled:cursor-not-allowed disabled:bg-gray-300
+                   w-full py-3 text-white hover:shadow-lg 
+                   hover:bg-red-600 transfrom transition-all duration-300 ease-out">{loading ?"Uploading" : "Upload Post"} </button>
+              </div>
+          </div>
+         </Box>
+
+       </Modal>
+
+      {/* Carousel Modal end */}
               <Hero />
             <div className="flex justify-center">
               <div className="md:mx-28  flex-col mx-auto space-y-4 md:space-y-0 md:grid md:grid-cols-3 md:gap-3 mt-10">

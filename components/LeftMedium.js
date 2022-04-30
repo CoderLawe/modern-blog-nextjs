@@ -5,6 +5,8 @@ import { DeleteModalContext, DetailContext, UpdateModalContext } from './context
 import { onSnapshot, collection, query, orderBy} from "@firebase/firestore";
 import  EditIcon  from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // You can also use <link> for styles
 import { db } from "../firebase";
 
 function LeftMedium({title, body, id, image,post}) {
@@ -46,9 +48,18 @@ function LeftMedium({title, body, id, image,post}) {
         setUpdateOpen(true)
 
     }
+
+      useEffect(() => {
+        AOS.init({
+          easing: "ease-in-back",
+          once: false,
+          offset: 50,
+        });
+      }, []);
+
     return (
 
-            <div className="md:flex block space-y-4 md:space-y-0 space-x-4 py-5 px-3">
+            <div data-aos="fade-in-zoom" data-aos-delay="200" data-aos-duration="4000"className="md:flex block space-y-4 md:space-y-0 space-x-4 py-5 px-3">
                 {/* Left side */}
                 
                 <div className="h-[300px]  md:h-[200px] md:w-[300px] relative">
