@@ -26,12 +26,13 @@ import { CameraIcon, TrashIcon } from '@heroicons/react/outline';
 import StoryblokClient from "storyblok-js-client";
 import DynamicComponent from '../components/DynamicComponent'
 import  { useStoryblok } from "../lib/storyblok";
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { onSnapshot, collection, query, orderBy, serverTimestamp, addDoc, updateDoc, deleteDoc, doc} from "@firebase/firestore";
-import { db } from "../firebase";
+import { db, storage } from "../firebase";
 import { DetailContext, ModalContext, UpdateBodyContext, UpdateImageContext, UpdateModalContext, DeleteModalContext , UpdateTitleContext } from '../components/context/DetailContext'
 import LoadingScreen from '../components/LoadingScreen'
-import { CarouselContext } from '../components/context/SectionsContext'
+import { CarouselContext, StagedContext } from '../components/context/SectionsContext'
+import { ref, getDownloadURL, uploadString } from "@firebase/storage";
 
 // import MainPostsSection from '../components/MainPostsSection'
 
@@ -89,11 +90,26 @@ export default function Home() {
   // Carousel
 
   const filePickerRef = useRef();
-  const [carouselOpen, setCarouselOpen] = useContext(CarouselContext)
+  const descriptionRef = useRef();
+  const titleRef = useRef(null);
+  const tagRef = useRef(null);
+
+  const [carouselLoading, setCarouselLoading] = useState(false);
+  const [carouselOpen, setCarouselOpen] = useContext(CarouselContext);
+  const [carouselImage, setCarouselImage] = useState("");
+  const [carouselTitle, setCarouselTitle] = useState("");
+  const [carouselTag, setCarouselTag] = useState("");
+  const [carouselDescription, setCarouselDescription] = useState("");
+
+
+
+
   const [selectedFile, setSelectedFile] = useState(null);
+  const [staged, setStaged] = useContext(StagedContext)
 
+  
 
-  const addImageToPost = () => {
+  const addImageToPost = (e) => {
     const reader = new FileReader();
 
     if(e.target.files[0]){
@@ -105,6 +121,41 @@ export default function Home() {
     }
   }
 
+  const addCarousel = async () => {
+    if(carouselLoading) return;
+
+    setCarouselLoading(true);
+
+    // Create a post and add it to the firestore 'posts' collection
+
+    // Get the post id from the newly created post.
+
+    // Upload the image to firebase storage with the post id
+    // Get a download URL from storage to storage and update original post with image
+
+    const docRef = await addDoc(collection(db, 'carousel'), {
+      title:titleRef.current.value,
+      tag:tagRef.current.value,
+      description:descriptionRef.current.value,
+      timestamp: serverTimestamp()
+    })
+
+    console.log("New doc added with Id", docRef.id)
+
+    const imageRef = ref(storage, `carousel/${docRef.id}/image`);
+
+    await uploadString(imageRef, selectedFile,"data_url").then(async snapshot => {
+      const downloadURL = await getDownloadURL(imageRef);
+
+      await updateDoc(doc(db, 'carousel', docRef.id),{
+        image: downloadURL
+      })
+    })
+
+    setCarouselOpen(false);
+    setCarouselLoading(false);
+    setSelectedFile(null);
+  }
 
   
 
@@ -188,7 +239,7 @@ useEffect(() => {
     setTimeout(() => {
         setLoading(false)
         console.log('Loading', loading)
-    },20000)
+    },5000)
 },[])
 
 
@@ -396,14 +447,14 @@ useEffect(() => {
        >
          <Box 
          sx={style}
-         className="bg-white text-gray-800 focus:outline-none"
+         className="bg-white text-gray-800 focus:outline-none overflow-y-scroll"
          >
           <div className="block">
             
           { selectedFile ? (  
 
               <>
-                <img src={selectedFile} className="w-full object-contain cursor-pointer" onClick={() => setSelectedFile(null)}alt=""/>
+                <img src={selectedFile} className="w-full object-cover cursor-pointer" onClick={() => setSelectedFile(null)}alt=""/>
               </>
 
           ) : (
@@ -427,13 +478,40 @@ useEffect(() => {
           
           <div className="flex flex-col justify-center">
             <div className="text-center"> 
-                <h3 className="text-gray-700 text-lg font-serif mt-5">Upload a Photo here</h3>
+                <h3 className="text-gray-700 text-lg font-serif mt-5">Upload a Carousel slide here</h3>
             </div>
 
+        {/* Tag */}
+            <div className="flex justify-center">
+              <div className="flex-col space-y-3">
+                <h5 className="flex justify-center font-serif text-coolYellow text-lg">Tag</h5>
+                <input ref={tagRef} className="focus:outline-none  border border-transparent focus:border-coolYellow border-none focus:ring-0 text-gray-600" placeholder="Please enter a Tag here" type="text"  
+                  />
+              </div>
+              
+
+            </div>
+
+
+        {/* Title */}
           <div className="flex justify-center">
-          <input ref={captionRef} className="focus:outline-none  border-none focus:ring-0 text-gray-400" placeholder="Please enter a caption here" type="text"  
-            // onChange={(e) => setCaption(e.target.value)}
+          <div className="flex-col space-y-3">
+                <h5 className="flex justify-center font-serif text-coolYellow text-lg">Title</h5>
+          <input ref={titleRef} className="focus:outline-none  border-none focus:ring-0 text-gray-400" placeholder="Please enter a caption here" type="text"  
             />
+            </div>
+
+          </div>
+
+
+{/* Description */}
+          <div className="flex justify-center">
+            <div className="flex-col space-y-3">
+                  <h5 className="flex justify-center font-serif text-coolYellow text-lg">Description</h5>
+              <input ref={descriptionRef} className="focus:outline-none  border-none focus:ring-0 text-gray-400" placeholder="Please enter a caption here" type="text"  
+              onChange={(e) => setCarouselDescription(e.target.value)}
+              />
+            </div>
 
           </div>
             
@@ -443,10 +521,10 @@ useEffect(() => {
               <div className="flex justify-center mt-4">
                   <button 
                   disabled={!setSelectedFile}
-                  onClick={uploadPost}
+                  onClick={addCarousel}
                   className="bg-red-500 text-center disabled:cursor-not-allowed disabled:bg-gray-300
                    w-full py-3 text-white hover:shadow-lg 
-                   hover:bg-red-600 transfrom transition-all duration-300 ease-out">{loading ?"Uploading" : "Upload Post"} </button>
+                   hover:bg-red-600 transfrom transition-all duration-300 ease-out">{carouselLoading ?"Uploading" : "Upload Post"} </button>
               </div>
           </div>
          </Box>

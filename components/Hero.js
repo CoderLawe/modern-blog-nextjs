@@ -6,6 +6,7 @@ import { CameraIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import CrudToggles from "./CrudToggles";
 
 function Hero() {
     const onClickItem = () => {
@@ -77,6 +78,10 @@ function Hero() {
         })
         console.log("posts",slides)
     },[db])
+
+    useEffect(() => {
+
+    },[])
     return (
         <Carousel
         className="mx-0 mt-8"
@@ -85,13 +90,26 @@ function Hero() {
         showStatus={false}
         showIndicators={true}
         showThumbs={false}
-        interval={3000}
+        interval={5000}
         >
                 {slides.map((slide) => (
                     <>
                         <div className="w-full h-[390px] relative ">
+                          {
+                            slide.data().image?(
+                            <>
+                              {/* <CrudToggles className="top-0 -right-0"/> */}
+                              <img src={slide.data().image} className="object-cover"/>
 
-                            <Image src="/images/greece.jpg" layout="fill" objectFit="cover"/>
+                              {/* <Image src={slide.data().image} layout="fill" objectFit="cover"/> */}
+                            </>
+                             
+
+                            ):(
+                              <Image src="/images/greece.jpg" layout="fill" objectFit="cover"/>
+
+                            )
+                          }
 
                         <div className="flex">
 
